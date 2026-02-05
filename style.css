@@ -89,8 +89,8 @@ body {
 }
 
 .logo-icon {
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     color: var(--primary);
 }
 
@@ -139,21 +139,22 @@ body {
 /* Floating Icons */
 .floating-icon {
     position: absolute;
-    width: 60px;
-    height: 60px;
+    width: 48px;
+    height: 48px;
     background: white;
-    border-radius: var(--radius-lg);
-    box-shadow: 0 8px 32px var(--shadow);
+    border-radius: var(--radius-md);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
     display: flex;
     align-items: center;
     justify-content: center;
     color: var(--primary);
     animation: float 6s ease-in-out infinite;
+    opacity: 0.8;
 }
 
 .floating-icon svg {
-    width: 30px;
-    height: 30px;
+    width: 24px;
+    height: 24px;
 }
 
 .floating-icon-1 {
@@ -440,16 +441,16 @@ body {
 }
 
 .avatar {
-    width: 44px;
-    height: 44px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     background: linear-gradient(135deg, var(--primary-light), var(--primary));
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.25rem;
+    font-size: 1.125rem;
     border: 3px solid white;
-    margin-left: -12px;
+    margin-left: -10px;
 }
 
 .avatar:first-child {
@@ -518,8 +519,8 @@ body {
 }
 
 .feature-icon {
-    width: 64px;
-    height: 64px;
+    width: 56px;
+    height: 56px;
     border-radius: var(--radius-md);
     display: flex;
     align-items: center;
@@ -528,8 +529,8 @@ body {
 }
 
 .feature-icon svg {
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     color: white;
 }
 
@@ -588,15 +589,15 @@ body {
 }
 
 .step-number {
-    width: 56px;
-    height: 56px;
+    width: 48px;
+    height: 48px;
     background: linear-gradient(135deg, var(--primary), var(--primary-light));
     color: white;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     font-weight: 800;
     flex-shrink: 0;
 }
@@ -732,13 +733,13 @@ body {
     }
     
     .floating-icon {
-        width: 40px;
-        height: 40px;
+        width: 36px;
+        height: 36px;
     }
     
     .floating-icon svg {
-        width: 20px;
-        height: 20px;
+        width: 18px;
+        height: 18px;
     }
     
     .step-arrow {
