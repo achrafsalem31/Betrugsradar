@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Schutz vor Telefonbetrug - Sicher vor Enkeltrick und Betrüger">
+    <meta name="theme-color" content="#2d5a3d">
+    <title>BetrugsSchutz - Sicher am Telefon</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-icon">🛡️</span>
+                <span class="logo-text">BetrugsSchutz</span>
+            </div>
+            <div class="nav-links">
+                <button class="nav-btn active" data-page="check">
+                    <span class="nav-icon">🔍</span>
+                    <span>Prüfen</span>
+                </button>
+                <button class="nav-btn" data-page="learn">
+                    <span class="nav-icon">📚</span>
+                    <span>Lernen</span>
+                </button>
+                <button class="nav-btn" data-page="quiz">
+                    <span class="nav-icon">🎯</span>
+                    <span>Quiz</span>
+                </button>
+                <button class="nav-btn" data-page="report">
+                    <span class="nav-icon">⚠️</span>
+                    <span>Melden</span>
+                </button>
+                <button class="nav-btn" data-page="admin">
+                    <span class="nav-icon">⚙️</span>
+                    <span>Verwaltung</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+        
+        <!-- Check Page -->
+        <section id="check-page" class="page active">
+            <div class="page-header">
+                <h1>Nummer Prüfen</h1>
+                <p class="subtitle">Ist diese Nummer verdächtig?</p>
+            </div>
+            
+            <div class="check-container">
+                <div class="input-group">
+                    <label for="phone-input">Telefonnummer eingeben:</label>
+                    <input 
+                        type="tel" 
+                        id="phone-input" 
+                        placeholder="z.B. 030 1234567" 
+                        autocomplete="off"
+                    >
+                    <button id="check-btn" class="btn btn-primary">
+                        <span>Nummer Prüfen</span>
+                        <span class="btn-icon">→</span>
+                    </button>
+                </div>
+
+                <div id="check-result" class="check-result hidden">
+                    <div class="result-card">
+                        <div class="result-status"></div>
+                        <div class="result-details">
+                            <h3 class="result-title"></h3>
+                            <p class="result-reason"></p>
+                            <div class="result-category"></div>
+                            <div class="result-action"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Learn Page -->
+        <section id="learn-page" class="page">
+            <div class="page-header">
+                <h1>Wissen Schützt</h1>
+                <p class="subtitle">Lernen Sie die häufigsten Betrugsmaschen kennen</p>
+            </div>
+            
+            <div class="learn-grid">
+                <div class="learn-card" data-topic="enkeltrick">
+                    <div class="card-icon">👵</div>
+                    <h3>Enkeltrick</h3>
+                    <p>Betrüger geben sich als Verwandte aus</p>
+                    <button class="btn btn-secondary">Mehr erfahren →</button>
+                </div>
+
+                <div class="learn-card" data-topic="polizei">
+                    <div class="card-icon">👮</div>
+                    <h3>Falsche Polizisten</h3>
+                    <p>Angebliche Polizei fordert Geld oder Wertsachen</p>
+                    <button class="btn btn-secondary">Mehr erfahren →</button>
+                </div>
+
+                <div class="learn-card" data-topic="schock">
+                    <div class="card-icon">🚨</div>
+                    <h3>Schockanrufe</h3>
+                    <p>Dringliche Notsituationen werden vorgetäuscht</p>
+                    <button class="btn btn-secondary">Mehr erfahren →</button>
+                </div>
+
+                <div class="learn-card" data-topic="bank">
+                    <div class="card-icon">🏦</div>
+                    <h3>Bank / TAN-Betrug</h3>
+                    <p>Angeblich Probleme mit Ihrem Konto</p>
+                    <button class="btn btn-secondary">Mehr erfahren →</button>
+                </div>
+
+                <div class="learn-card" data-topic="techsupport">
+                    <div class="card-icon">💻</div>
+                    <h3>Tech-Support</h3>
+                    <p>Falsche Microsoft oder IT-Mitarbeiter</p>
+                    <button class="btn btn-secondary">Mehr erfahren →</button>
+                </div>
+
+                <div class="learn-card" data-topic="gewinnspiel">
+                    <div class="card-icon">🎁</div>
+                    <h3>Gewinnspiele</h3>
+                    <p>Sie haben angeblich gewonnen</p>
+                    <button class="btn btn-secondary">Mehr erfahren →</button>
+                </div>
+            </div>
+
+            <!-- Detail View -->
+            <div id="learn-detail" class="learn-detail hidden">
+                <button class="back-btn">← Zurück zur Übersicht</button>
+                <div class="detail-content"></div>
+            </div>
+        </section>
+
+        <!-- Quiz Page -->
+        <section id="quiz-page" class="page">
+            <div class="page-header">
+                <h1>Spielerisch Lernen</h1>
+                <p class="subtitle">Testen Sie Ihr Wissen</p>
+            </div>
+
+            <div id="quiz-start" class="quiz-start">
+                <div class="quiz-topics">
+                    <h2>Wählen Sie ein Thema:</h2>
+                    <div class="quiz-topics-grid">
+                        <button class="quiz-topic-btn" data-quiz="enkeltrick">
+                            <span class="topic-icon">👵</span>
+                            <span>Enkeltrick</span>
+                        </button>
+                        <button class="quiz-topic-btn" data-quiz="polizei">
+                            <span class="topic-icon">👮</span>
+                            <span>Falsche Polizisten</span>
+                        </button>
+                        <button class="quiz-topic-btn" data-quiz="bank">
+                            <span class="topic-icon">🏦</span>
+                            <span>Bank-Betrug</span>
+                        </button>
+                        <button class="quiz-topic-btn" data-quiz="allgemein">
+                            <span class="topic-icon">🎯</span>
+                            <span>Gemischtes Quiz</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="quiz-container" class="quiz-container hidden">
+                <div class="quiz-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
+                    </div>
+                    <p class="progress-text">Frage <span id="current-q">1</span> von <span id="total-q">5</span></p>
+                </div>
+
+                <div class="quiz-question">
+                    <h2 id="question-text"></h2>
+                    <div id="quiz-scenario" class="quiz-scenario hidden"></div>
+                    <div id="quiz-options" class="quiz-options"></div>
+                </div>
+
+                <div id="quiz-feedback" class="quiz-feedback hidden"></div>
+                
+                <div class="quiz-navigation">
+                    <button id="quiz-next" class="btn btn-primary hidden">Weiter →</button>
+                </div>
+            </div>
+
+            <div id="quiz-results" class="quiz-results hidden">
+                <div class="results-card">
+                    <h2>Quiz beendet!</h2>
+                    <div class="score-display">
+                        <div class="score-circle">
+                            <span id="final-score">0</span>
+                            <span class="score-total">/ 5</span>
+                        </div>
+                    </div>
+                    <p id="results-message"></p>
+                    <div class="results-actions">
+                        <button id="quiz-restart" class="btn btn-primary">Neues Quiz starten</button>
+                        <button id="quiz-review" class="btn btn-secondary">Antworten ansehen</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Report Page -->
+        <section id="report-page" class="page">
+            <div class="page-header">
+                <h1>Nummer Melden</h1>
+                <p class="subtitle">Helfen Sie anderen - melden Sie verdächtige Nummern</p>
+            </div>
+
+            <div class="report-container">
+                <div class="report-form">
+                    <div class="form-group">
+                        <label for="report-phone">Telefonnummer *</label>
+                        <input 
+                            type="tel" 
+                            id="report-phone" 
+                            placeholder="z.B. 030 1234567"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="report-category">Art des Betrugs</label>
+                        <select id="report-category">
+                            <option value="">Bitte wählen...</option>
+                            <option value="enkeltrick">Enkeltrick</option>
+                            <option value="polizei">Falsche Polizisten</option>
+                            <option value="schock">Schockanruf</option>
+                            <option value="bank">Bank / TAN-Betrug</option>
+                            <option value="techsupport">Tech-Support</option>
+                            <option value="gewinnspiel">Gewinnspiel</option>
+                            <option value="sonstiges">Sonstiges</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="report-details">Beschreibung (optional)</label>
+                        <textarea 
+                            id="report-details" 
+                            rows="4" 
+                            placeholder="Was wurde Ihnen am Telefon gesagt?"
+                        ></textarea>
+                    </div>
+
+                    <button id="submit-report" class="btn btn-primary">
+                        <span>Nummer melden</span>
+                        <span class="btn-icon">✓</span>
+                    </button>
+                </div>
+
+                <div class="report-info">
+                    <div class="info-card">
+                        <h3>🤝 Gemeinsam stärker</h3>
+                        <p>Jede Meldung hilft, andere Menschen zu schützen. Ihre Angaben werden anonymisiert gespeichert.</p>
+                    </div>
+
+                    <div class="info-card">
+                        <h3>📋 Offizielle Meldung</h3>
+                        <p>Möchten Sie den Betrug auch offiziell melden?</p>
+                        <a href="https://www.bundesnetzagentur.de/DE/Vportal/TK/Aerger/Faelle/start.html" 
+                           target="_blank" 
+                           class="btn btn-secondary external-link">
+                            Bundesnetzagentur →
+                        </a>
+                    </div>
+                </div>
+
+                <div id="report-success" class="report-success hidden">
+                    <div class="success-message">
+                        <div class="success-icon">✓</div>
+                        <h3>Vielen Dank!</h3>
+                        <p>Ihre Meldung wurde gespeichert und hilft anderen Menschen.</p>
+                        <button id="new-report" class="btn btn-secondary">Weitere Nummer melden</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Admin Page -->
+        <section id="admin-page" class="page">
+            <div class="page-header">
+                <h1>Verwaltung</h1>
+                <p class="subtitle">Datenbank und Statistiken</p>
+            </div>
+
+            <div class="admin-container">
+                <div class="admin-tabs">
+                    <button class="admin-tab active" data-tab="stats">Statistiken</button>
+                    <button class="admin-tab" data-tab="numbers">Nummern</button>
+                    <button class="admin-tab" data-tab="content">Inhalte</button>
+                </div>
+
+                <!-- Statistics Tab -->
+                <div id="stats-tab" class="admin-tab-content active">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">📊</div>
+                            <div class="stat-value" id="total-checks">0</div>
+                            <div class="stat-label">Nummern geprüft</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">⚠️</div>
+                            <div class="stat-value" id="total-reports">0</div>
+                            <div class="stat-label">Meldungen</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">🎯</div>
+                            <div class="stat-value" id="total-quizzes">0</div>
+                            <div class="stat-label">Quiz absolviert</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">🛡️</div>
+                            <div class="stat-value" id="blacklist-count">0</div>
+                            <div class="stat-label">Gesperrte Nummern</div>
+                        </div>
+                    </div>
+
+                    <div class="chart-container">
+                        <h3>Meldungen nach Kategorie</h3>
+                        <canvas id="category-chart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Numbers Tab -->
+                <div id="numbers-tab" class="admin-tab-content">
+                    <div class="numbers-controls">
+                        <input type="text" id="number-search" placeholder="Nummer suchen..." class="search-input">
+                        <button id="add-number-btn" class="btn btn-primary">+ Nummer hinzufügen</button>
+                    </div>
+                    <div id="numbers-list" class="numbers-list"></div>
+                </div>
+
+                <!-- Content Tab -->
+                <div id="content-tab" class="admin-tab-content">
+                    <div class="content-editor">
+                        <h3>Lernmodule verwalten</h3>
+                        <p>Hier können Sie die Inhalte der Lernmodule bearbeiten und aktualisieren.</p>
+                        <button class="btn btn-secondary">Inhalte bearbeiten</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Install Prompt -->
+    <div id="install-prompt" class="install-prompt hidden">
+        <div class="install-content">
+            <button class="install-close">×</button>
+            <div class="install-icon">📱</div>
+            <h3>App installieren?</h3>
+            <p>Installieren Sie BetrugsSchutz für schnellen Zugriff, auch offline.</p>
+            <button id="install-btn" class="btn btn-primary">Jetzt installieren</button>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading" class="loading-overlay hidden">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
