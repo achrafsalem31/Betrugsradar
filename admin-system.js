@@ -122,6 +122,15 @@ async function handleAdminLogin() {
         loadAdminDashboard();
         showNotification('Erfolgreich eingeloggt!', 'success');
 
+        // ننتظروا شوية حتى تسالي showPage خدمتها عاد نبينوا الزر
+        setTimeout(() => {
+            const logoutBtn = document.getElementById('logoutBtn');
+            if (logoutBtn) {
+                logoutBtn.style.setProperty('display', 'flex', 'important');
+                console.log("🔥 Logout button forced to show");
+            }
+        }, 100);
+
     } catch (error) {
         console.error('❌ ERROR:', error);
         showLoginError('Fehler beim Login');
@@ -129,8 +138,7 @@ async function handleAdminLogin() {
         submitBtn.disabled = false;
         submitBtn.textContent = 'Login';
     }
-}
-
+} // <--- هاد القوس هو اللي كيسد الدالة كاملة
 /**
  * Show login error message
  */
@@ -453,31 +461,56 @@ function hideLoading() {
 }
 
 // ===================================
-// 5. PAGE NAVIGATION (Update existing function)
+// 5. PAGE NAVIGATION & LOGOUT CONTROL
 // ===================================
 
 function showPage(pageId) {
-    // Hide all pages
-    document.querySelectorAll('.page').forEach(page => {
-        page.classList.remove('active');
-    });
+    // 1. إخفاء كل الصفحات والأزرار
+    document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+    document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
     
-    // Remove active from all nav buttons
-    document.querySelectorAll('.nav-btn').forEach(btn => {
-        btn.classList.remove('active');
-    });
-    
-    // Show requested page
+    // 2. إظهار الصفحة والزر المختارين
     const targetPage = document.getElementById(`${pageId}-page`);
-    if (targetPage) {
-        targetPage.classList.add('active');
-    }
+    if (targetPage) targetPage.classList.add('active');
     
-    // Add active to nav button
     const targetBtn = document.querySelector(`[data-page="${pageId}"]`);
-    if (targetBtn) {
-        targetBtn.classList.add('active');
+    if (targetBtn) targetBtn.classList.add('active');
+
+    // 🟢 3. التحكم في زر Abmelden: يبان فقط للآدمن وفي صفحة الإدارة
+    const logoutBtn = document.getElementById('logoutBtn');
+    const isLoggedIn = localStorage.getItem('token') !== null;
+    
+    if (logoutBtn) {
+        if (isLoggedIn && pageId === 'admin') {
+            logoutBtn.style.setProperty('display', 'flex', 'important');
+        } else {
+            logoutBtn.style.setProperty('display', 'none', 'important');
+        }
     }
 }
 
-console.log('🔥 ADMIN SYSTEM MODIFIED LOADED');
+// ✅ معالجة تسجيل الخروج والتشغيل التلقائي
+document.addEventListener('click', (e) => {
+    const btn = e.target.closest('#logoutBtn');
+    if (btn) {
+        localStorage.removeItem('token');
+        window.location.reload(); 
+    }
+});
+
+// ✅ حل مشكل Ctrl+Shift+R (كيتأكد من الحالة غير كيتحل الموقع)
+window.addEventListener('load', () => {
+    const isLoggedIn = localStorage.getItem('token') !== null;
+    const logoutBtn = document.getElementById('logoutBtn');
+    
+    // إذا كان الآدمن داخل ديجا، كنخليو السيستم واجد
+    if (isLoggedIn && logoutBtn) {
+        console.log("🚀 Admin session active");
+        // إلا كان الموقع كيتحل نيشان على صفحة Admin، بين الزر
+        if (document.getElementById('admin-page').classList.contains('active')) {
+            logoutBtn.style.setProperty('display', 'flex', 'important');
+        }
+    }
+});
+
+console.log('🔥 SYSTEM FULLY REFINED & READY');

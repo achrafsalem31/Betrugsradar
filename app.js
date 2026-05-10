@@ -468,11 +468,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function initializeNavigation() {
     const navBtns = document.querySelectorAll('.nav-btn');
-    
+    const logoutBtn = document.getElementById('logoutBtn');
+
     navBtns.forEach(btn => {
         btn.addEventListener('click', async () => {
             const page = btn.dataset.page;
-
+            
+            if (page !== 'admin' && logoutBtn) {
+                logoutBtn.style.display = 'none';
+            }
+            
             // Laisse admin-system.js gérer entièrement la navigation admin
             if (page === 'admin') {
                 return;
