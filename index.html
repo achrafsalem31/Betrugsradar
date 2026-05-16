@@ -8,6 +8,7 @@
     <title>CallSafe - Sicher am Telefon</title>
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="contact-form.css">
     <link rel="icon" type="image/png" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
    
 </head>
@@ -347,10 +348,110 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="loading-spinner"></div>
     </div>
 
-    
+
+  <!-- CALLSAFE — Floating Contact Button -->
+
+
+</body> 
+
+
+<!-- Floating Button -->
+<button class="contact-float-btn" id="contactFloatBtn" aria-label="Kontakt aufnehmen">
+    ✉️
+    <span class="float-label">Kontaktieren Se uns</span>
+</button>
+
+<!-- Overlay + Modal -->
+<div class="contact-overlay" id="contactOverlay" role="dialog" aria-modal="true" aria-labelledby="contactModalTitle">
+    <div class="contact-modal" id="contactModal">
+
+        <!-- Header -->
+        <div class="contact-modal-header">
+            <div style="display:flex;align-items:center;gap:12px;">
+                <div class="contact-modal-header-icon">📬</div>
+                <div class="contact-modal-header-text">
+                    <h2 id="contactModalTitle">Schreiben Sie uns</h2>
+                    <p>Wir melden uns innerhalb von 24 Stunden zurück.</p>
+                </div>
+            </div>
+            <button class="contact-close-btn" id="contactCloseBtn" aria-label="Schließen">✕</button>
+        </div>
+
+        <!-- Body -->
+        <div class="contact-modal-body">
+
+            <!-- Success State (hidden initially) -->
+            <div class="cf-success" id="cfSuccess">
+                <div class="cf-success-circle">✓</div>
+                <h3>Nachricht gesendet!</h3>
+                <p>Vielen Dank für Ihre Nachricht. Wir werden uns so schnell wie möglich bei Ihnen melden.</p>
+                <button class="cf-success-close" id="cfSuccessClose">Fenster schließen</button>
+            </div>
+
+            <!-- Form -->
+            <form id="contactForm" novalidate>
+
+                <!-- Name + E-Mail -->
+                <div class="cf-row">
+                    <div class="cf-group" id="cfGroupName">
+                        <label for="cfName">Name</label>
+                        <input type="text" id="cfName" name="name" placeholder="Ihr Name" autocomplete="name">
+                        <div class="cf-field-error" id="cfErrorName">Bitte geben Sie Ihren Namen ein.</div>
+                    </div>
+                    <div class="cf-group" id="cfGroupEmail">
+                        <label for="cfEmail">E-Mail</label>
+                        <input type="email" id="cfEmail" name="email" placeholder="ihre@email.de" autocomplete="email">
+                        <div class="cf-field-error" id="cfErrorEmail">Bitte geben Sie eine gültige E-Mail ein.</div>
+                    </div>
+                </div>
+
+                <!-- Telefon -->
+                <div class="cf-group">
+                    <label for="cfPhone">
+                        Telefon <span class="cf-optional">(optional)</span>
+                    </label>
+                    <input type="tel" id="cfPhone" name="phone" placeholder="+49 30 1234567" autocomplete="tel">
+                </div>
+
+                <!-- Kategorie -->
+                <div class="cf-group" id="cfGroupCategory">
+                    <label for="cfCategory">Betreff / Kategorie</label>
+                    <div class="cf-select-wrapper">
+                        <select id="cfCategory" name="category">
+                            <option value="">Bitte wählen …</option>
+                            <option value="nummer">📞 Über eine Telefonnummer sprechen</option>
+                            <option value="kooperation">🤝 Kooperation / Partnerschaft</option>
+                            <option value="support">🛠️ Support</option>
+                            <option value="feedback">💬 Feedback</option>
+                            <option value="technisches_problem">🔧 Technisches Problem</option>
+                        </select>
+                    </div>
+                    <div class="cf-field-error" id="cfErrorCategory">Bitte wählen Sie eine Kategorie.</div>
+                </div>
+
+                <!-- Nachricht -->
+                <div class="cf-group" id="cfGroupMessage">
+                    <label for="cfMessage">Nachricht</label>
+                    <textarea id="cfMessage" name="message" rows="4" placeholder="Wie können wir Ihnen helfen?"></textarea>
+                    <div class="cf-field-error" id="cfErrorMessage">Bitte geben Sie eine Nachricht ein.</div>
+                </div>
+
+                <!-- Submit -->
+                <button type="submit" class="cf-submit-btn" id="cfSubmitBtn">
+                    <div class="cf-spinner"></div>
+                    <span class="cf-btn-icon">📤</span>
+                    <span class="cf-btn-text">Nachricht senden</span>
+                </button>
+
+            </form>
+        </div>
+    </div>
+</div>
+
     <script src="api-client.js"></script> 
     <script src="admin-system.js"></script>
     <script src="admin-management-complete.js"></script>
     <script src="app.js"></script>
+    <script src="contact-form.js"></script>
 </body>
 </html>
