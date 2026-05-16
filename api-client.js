@@ -251,3 +251,69 @@ console.log('✅ API Client geladen');
 console.log('📊 Backend:', API_URL);
 console.log('🔌 window.API & window.DB bereit!');
 
+// ==========================================
+// 🎯 QUIZ API FUNCTIONS (الإنشاء والتعديل والمسح)
+// ==========================================
+
+async function createQuiz(quizData) {
+    try {
+        const response = await fetch(`${API_URL}/quiz`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(quizData)
+        });
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || 'Fehler beim Erstellen des Quiz');
+        }
+        return await response.json();
+    } catch (error) {
+        console.error('❌ Error in createQuiz:', error);
+        throw error;
+    }
+}
+
+async function updateQuiz(quizId, quizData) {
+    try {
+        const response = await fetch(`${API_URL}/quiz/${quizId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(quizData)
+        });
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || 'Fehler beim Aktualisieren des Quiz');
+        }
+        return await response.json();
+    } catch (error) {
+        console.error('❌ Error in updateQuiz:', error);
+        throw error;
+    }
+}
+
+async function deleteQuiz(quizId) {
+    try {
+        const response = await fetch(`${API_URL}/quiz/${quizId}`, {
+            method: 'DELETE'
+        });
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || 'Fehler beim Löschen des Quiz');
+        }
+        return await response.json();
+    } catch (error) {
+        console.error('❌ Error in deleteQuiz:', error);
+        throw error;
+    }
+}
+
+// 🔗 ربط الدالات الجداد مع الـ window Object باش الـ Dashboard يقراهم
+window.API.createQuiz = createQuiz;
+window.API.updateQuiz = updateQuiz;
+window.API.deleteQuiz = deleteQuiz;
+
+console.log('🧠 Quiz API Funktionen erfolgreich an window.API gebunden!');

@@ -464,6 +464,11 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeReportPage();
     initializePWA();
     loadStats();
+    
+    // 🎯 شحن الكويزات من Supabase ديريكت غير تشعل الصفحة!
+    if (typeof loadAdminQuizzes === 'function') {
+        loadAdminQuizzes();
+    }
 });
 
 function initializeNavigation() {
@@ -653,6 +658,23 @@ function startQuiz(topic) {
     appState.currentQuestion = 0;
     appState.quizScore = 0;
     appState.quizAnswers = [];
+
+    // 🎯 الـلـمـسـة الـسِّـحْـرِيَّـة:
+    // إذا لقاو كويز جاي من Supabase كيطابق هاد الـ Category (Topic)، كنعوضو بيه الأسئلة ديريكت!
+    if (window.allAdminQuizzes) {
+        const dbQuiz = window.allAdminQuizzes.find(q => q.category === topic);
+        if (dbQuiz && dbQuiz.questions) {
+            // تحويل التسميات إذا كان الباكند كيرد correct_answer والـ Frontend باغي correct
+            quizQuestions[topic] = dbQuiz.questions.map(q => ({
+                question: q.question,
+                scenario: q.scenario || '',
+                options: q.options || [],
+                correct: q.correct_answer !== undefined ? Number(q.correct_answer) : Number(q.correct),
+                explanation: q.explanation || ''
+            }));
+            console.log(`🧠 Quiz für ${topic} erfolgreich aus Supabase geladen!`);
+        }
+    }
     
     document.getElementById('quiz-start').style.display = 'none';
     document.getElementById('quiz-container').classList.remove('hidden');
