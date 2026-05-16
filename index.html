@@ -244,6 +244,48 @@
 
     </div>
 </section>
+<div id="addQuizModal" class="modal hidden" style="display:none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); overflow-y: auto; padding-top: 50px;">
+    <div class="modal-content" style="background-color: #fff; margin: auto; padding: 25px; border-radius: 12px; width: 60%; max-width: 800px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); position: relative; margin-bottom: 50px;">
+        <span onclick="document.getElementById('addQuizModal').style.display='none'" class="close" style="position: absolute; right: 20px; top: 15px; font-size: 28px; font-weight: bold; cursor: pointer;">&times;</span>
+        
+        <h2 id="quizModalTitle" style="color: #2d5a3d; margin-bottom: 20px;">➕ Neues Quiz erstellen</h2>
+        
+        <form id="addQuizForm">
+            <div class="form-group" style="margin-bottom: 15px;">
+                <label style="font-weight: 600; display: block; margin-bottom: 5px;">Titel *</label>
+                <input type="text" id="quizTitle" class="form-control" style="width: 100%; padding: 10px; border: 2px solid #e0e0e0; border-radius: 8px;" required>
+            </div>
+            
+            <div class="form-group" style="margin-bottom: 15px;">
+                <label style="font-weight: 600; display: block; margin-bottom: 5px;">Beschreibung *</label>
+                <textarea id="quizDescription" class="form-control" rows="3" style="width: 100%; padding: 10px; border: 2px solid #e0e0e0; border-radius: 8px;" required></textarea>
+            </div>
+            
+            <div class="form-group" style="margin-bottom: 20px;">
+                <label style="font-weight: 600; display: block; margin-bottom: 5px;">Kategorie *</label>
+                <select id="quizCategory" class="form-select" style="width: 100%; padding: 10px; border: 2px solid #e0e0e0; border-radius: 8px;">
+                    <option value="enkeltrick">👵 Enkeltrick</option>
+                    <option value="polizei">👮 Falsche Polizisten</option>
+                    <option value="schock">🚨 Schockanruf</option>
+                    <option value="bank">🏦 Bank-Betrug</option>
+                    <option value="techsupport">💻 Tech-Support</option>
+                    <option value="gewinnspiel">🎁 Gewinnspiel</option>
+                    <option value="allgemein">🎯 Gemischtes Quiz</option>
+                </select>
+            </div>
+            
+            <hr style="border: 1px solid #eee; margin: 25px 0;">
+            <h3 style="color: #2d5a3d; margin-bottom: 15px;">🧱 Fragen</h3>
+            
+            <div id="questionsContainer"></div>
+            
+            <div style="display: flex; gap: 10px; margin-top: 20px; justify-content: flex-end;">
+                <button type="button" onclick="if(typeof window.addQuestionField === 'function') window.addQuestionField()" class="btn btn-secondary" style="background: #f5f5f5; border: 2px solid #e0e0e0; padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer;">+ Frage hinzufügen</button>
+                <button type="submit" class="btn btn-primary" style="background: #2d5a3d; color: white; border: none; padding: 10px 25px; border-radius: 8px; font-weight: 600; cursor: pointer;">💾 Speichern</button>
+            </div>
+        </form>
+    </div>
+</div>
 <!-- Admin Tab Styles -->
 <style>
 .admin-tabs {
