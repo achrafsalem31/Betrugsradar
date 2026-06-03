@@ -447,19 +447,27 @@ async function deleteQuiz(quizId) {
 }
 
 // ===================================
-// 3. TRAININGS-VERWALTUNG (CRUD)
+// TRAININGS-VERWALTUNG (CRUD) — vollständig
+// Diesen Block ERSETZEN in admin-management-complete.js
+// (Abschnitt "3. TRAININGS-VERWALTUNG")
 // ===================================
+
+// ──────────────────────────────────────────────────
+// Laden & Anzeigen
+// ──────────────────────────────────────────────────
 
 async function loadAdminTrainings() {
     if (typeof showLoading === 'function') showLoading();
     try {
-        const response = await fetch(`http://localhost:3000/api/training`, {
+        const response = await fetch('http://localhost:3000/api/training', {
             headers: { 'Authorization': `Bearer ${getToken()}` }
         });
         const data = await response.json();
-        displayTrainingsList(data.modules || []);
+        window.allTrainingModules = data.modules || [];
+        displayTrainingsList(window.allTrainingModules);
     } catch (error) {
         console.error('Load trainings error:', error);
+        if (typeof showNotification === 'function') showNotification('Fehler beim Laden der Trainings', 'error');
     } finally {
         if (typeof hideLoading === 'function') hideLoading();
     }
@@ -469,44 +477,72 @@ function displayTrainingsList(modules) {
     const container = document.getElementById('trainings-list');
     if (!container) return;
     container.innerHTML = '';
-    
-    if (modules.length === 0) {
-        container.innerHTML = '<p style="padding: 20px; text-align: center; color: #666;">Keine Trainings vorhanden</p>';
+
+    if (!modules || modules.length === 0) {
+        container.innerHTML = '<p style="padding: 20px; text-align: center; color: #666;">Keine Trainings vorhanden. Erstellen Sie das erste Modul!</p>';
         return;
     }
-    
+
     modules.forEach(module => {
         const card = document.createElement('div');
         card.className = 'training-card';
-        card.style.cssText = 'background: white; padding: 20px; margin-bottom: 15px; border-radius: 8px; border: 1px solid #ddd;';
-        
-        const publishedBadge = module.published 
-            ? '<span style="background: #4caf50; color: white; padding: 4px 12px; border-radius: 12px; font-size: 0.8rem;">Veröffentlicht</span>'
-            : '<span style="background: #999; color: white; padding: 4px 12px; border-radius: 12px; font-size: 0.8rem;">Entwurf</span>';
-        
+        card.style.cssText = 'background: white; padding: 20px; margin-bottom: 15px; border-radius: 8px; border: 1px solid #ddd; display:flex; justify-content:space-between; align-items:flex-start; gap:16px;';
+
+        const publishedBadge = module.published
+            ? '<span style="background:#4caf50;color:white;padding:4px 12px;border-radius:12px;font-size:0.8rem;">✅ Veröffentlicht</span>'
+            : '<span style="background:#999;color:white;padding:4px 12px;border-radius:12px;font-size:0.8rem;">📝 Entwurf</span>';
+
         card.innerHTML = `
-            <div style="display: flex; justify-content: space-between; align-items: start;">
-                <div style="flex: 1;">
-                    <div style="font-size: 2rem; margin-bottom: 10px;">${module.icon || '📚'}</div>
-                    <h3 style="margin: 0 0 8px 0;">${module.title}</h3>
-                    <p style="margin: 0 0 8px 0; color: #666;">${module.description}</p>
-                    <div style="display: flex; gap: 10px; align-items: center;">
-                        ${publishedBadge}
-                        <span style="color: #666; font-size: 0.9rem;">Kategorie: ${module.category}</span>
-                    </div>
+            <div style="flex:1;">
+                <div style="font-size:2rem;margin-bottom:8px;">${module.icon || '📚'}</div>
+                <h3 style="margin:0 0 6px 0;">${module.title}</h3>
+                <p style="margin:0 0 10px 0;color:#666;font-size:0.9rem;">${module.description}</p>
+                <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+                    ${publishedBadge}
+                    <span style="color:#666;font-size:0.85rem;">Kategorie: <strong>${module.category}</strong></span>
+                    <span style="color:#666;font-size:0.85rem;">Reihenfolge: ${module.order_index ?? 0}</span>
                 </div>
-                <div style="display: flex; gap: 8px;">
-                    <button class="btn btn-secondary" onclick="alert('Coming soon')">✏️ Bearbeiten</button>
-                    <button class="btn btn-danger" onclick="deleteTraining('${module.id}')" style="padding: 8px 16px; background: #d32f2f;">🗑️ Löschen</button>
-                </div>
+            </div>
+            <div style="display:flex;gap:8px;flex-shrink:0;">
+                <button class="btn btn-secondary" onclick="editTraining('${module.id}')" style="padding:8px 14px;">✏️ Bearbeiten</button>
+                <button class="btn btn-danger" onclick="deleteTraining('${module.id}')" style="padding:8px 14px;background:#d32f2f;color:white;border:none;border-radius:6px;cursor:pointer;">🗑️ Löschen</button>
             </div>
         `;
         container.appendChild(card);
     });
 }
 
+// ──────────────────────────────────────────────────
+// Modal öffnen / schließen
+// ──────────────────────────────────────────────────
+
+function showAddTrainingModal() {
+    _openTrainingModal(null);
+}
+
+function closeAddTrainingModal() {
+    const modal = document.getElementById('addTrainingModal');
+    if (modal) modal.style.display = 'none';
+}
+
+// ──────────────────────────────────────────────────
+// Bearbeiten
+// ──────────────────────────────────────────────────
+
+window.editTraining = function(id) {
+    const mod = window.allTrainingModules
+        ? window.allTrainingModules.find(m => m.id == id)
+        : null;
+    if (!mod) { alert('Modul nicht gefunden'); return; }
+    _openTrainingModal(mod);
+};
+
+// ──────────────────────────────────────────────────
+// Löschen
+// ──────────────────────────────────────────────────
+
 async function deleteTraining(trainingId) {
-    if (!confirm('Training wirklich löschen?')) return;
+    if (!confirm('Training-Modul wirklich löschen? Dieser Vorgang kann nicht rückgängig gemacht werden!')) return;
     if (typeof showLoading === 'function') showLoading();
     try {
         const response = await fetch(`http://localhost:3000/api/training/${trainingId}`, {
@@ -514,15 +550,207 @@ async function deleteTraining(trainingId) {
             headers: { 'Authorization': `Bearer ${getToken()}` }
         });
         if (response.ok) {
-            alert('Training gelöscht');
+            if (typeof showNotification === 'function') showNotification('Modul gelöscht', 'success');
             await loadAdminTrainings();
+            // Frontend-Cache ebenfalls aktualisieren
+            if (typeof initializeLearnPage === 'function') initializeLearnPage();
+        } else {
+            if (typeof showNotification === 'function') showNotification('Fehler beim Löschen', 'error');
         }
     } catch (error) {
-        console.error(error);
+        console.error('Delete training error:', error);
     } finally {
         if (typeof hideLoading === 'function') hideLoading();
     }
 }
+
+// ──────────────────────────────────────────────────
+// Intern: Modal bauen und öffnen
+// ──────────────────────────────────────────────────
+
+function _openTrainingModal(mod) {
+    // Altes Modal entfernen, falls vorhanden
+    const existing = document.getElementById('addTrainingModal');
+    if (existing) existing.remove();
+
+    const isEdit = !!mod;
+
+    const modalHTML = `
+    <div id="addTrainingModal" style="display:block;position:fixed;z-index:2000;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,0.55);overflow-y:auto;padding:40px 20px;">
+      <div style="background:#fff;margin:auto;padding:30px;border-radius:14px;width:100%;max-width:720px;box-shadow:0 8px 32px rgba(0,0,0,0.25);position:relative;">
+
+        <span onclick="closeAddTrainingModal()" style="position:absolute;right:20px;top:16px;font-size:26px;font-weight:bold;cursor:pointer;color:#666;">&times;</span>
+
+        <h2 style="color:#2d5a3d;margin-bottom:22px;">${isEdit ? '📝 Modul bearbeiten' : '➕ Neues Lernmodul erstellen'}</h2>
+
+        <form id="addTrainingForm" ${isEdit ? `data-edit-id="${mod.id}"` : ''}>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+            <div>
+              <label style="font-weight:600;display:block;margin-bottom:5px;">Titel *</label>
+              <input type="text" id="trainingTitle" value="${isEdit ? _esc(mod.title) : ''}"
+                style="width:100%;padding:10px;border:2px solid #e0e0e0;border-radius:8px;" required>
+            </div>
+            <div>
+              <label style="font-weight:600;display:block;margin-bottom:5px;">Icon (Emoji)</label>
+              <input type="text" id="trainingIcon" value="${isEdit ? _esc(mod.icon || '📚') : '📚'}"
+                style="width:100%;padding:10px;border:2px solid #e0e0e0;border-radius:8px;" maxlength="4" placeholder="z.B. 👵">
+            </div>
+          </div>
+
+          <div style="margin-bottom:16px;">
+            <label style="font-weight:600;display:block;margin-bottom:5px;">Kurzbeschreibung *</label>
+            <input type="text" id="trainingDescription" value="${isEdit ? _esc(mod.description) : ''}"
+              style="width:100%;padding:10px;border:2px solid #e0e0e0;border-radius:8px;" required
+              placeholder="Kurze Beschreibung des Lernmoduls">
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+            <div>
+              <label style="font-weight:600;display:block;margin-bottom:5px;">Kategorie *</label>
+              <select id="trainingCategory" style="width:100%;padding:10px;border:2px solid #e0e0e0;border-radius:8px;" required>
+                <option value="enkeltrick"  ${isEdit && mod.category === 'enkeltrick'  ? 'selected' : ''}>👵 Enkeltrick</option>
+                <option value="polizei"     ${isEdit && mod.category === 'polizei'     ? 'selected' : ''}>👮 Falsche Polizisten</option>
+                <option value="schock"      ${isEdit && mod.category === 'schock'      ? 'selected' : ''}>🚨 Schockanruf</option>
+                <option value="bank"        ${isEdit && mod.category === 'bank'        ? 'selected' : ''}>🏦 Bank-Betrug</option>
+                <option value="techsupport" ${isEdit && mod.category === 'techsupport' ? 'selected' : ''}>💻 Tech-Support</option>
+                <option value="gewinnspiel" ${isEdit && mod.category === 'gewinnspiel' ? 'selected' : ''}>🎁 Gewinnspiel</option>
+              </select>
+            </div>
+            <div>
+              <label style="font-weight:600;display:block;margin-bottom:5px;">Reihenfolge</label>
+              <input type="number" id="trainingOrder" value="${isEdit ? (mod.order_index ?? 0) : 0}" min="0"
+                style="width:100%;padding:10px;border:2px solid #e0e0e0;border-radius:8px;">
+            </div>
+          </div>
+
+          <div style="margin-bottom:16px;">
+            <label style="font-weight:600;display:block;margin-bottom:5px;">
+              Status
+            </label>
+            <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+              <input type="checkbox" id="trainingPublished" ${!isEdit || mod.published ? 'checked' : ''}
+                style="width:18px;height:18px;">
+              <span>Veröffentlicht (sofort im Lernen-Bereich sichtbar)</span>
+            </label>
+          </div>
+
+          <div style="margin-bottom:20px;">
+            <label style="font-weight:600;display:block;margin-bottom:8px;">Lerninhalt (HTML) *</label>
+            <p style="font-size:0.82rem;color:#888;margin-bottom:6px;">
+              Sie können HTML nutzen: &lt;h2&gt;, &lt;h3&gt;, &lt;p&gt;, &lt;ul&gt;, &lt;li&gt;, &lt;strong&gt;,
+              &lt;div class="warning-box"&gt;, &lt;div class="tip-box"&gt;
+            </p>
+            <textarea id="trainingContent" rows="14"
+              style="width:100%;padding:10px;border:2px solid #e0e0e0;border-radius:8px;font-family:monospace;font-size:0.85rem;resize:vertical;"
+              required placeholder="<h2>🚨 Titel</h2>&#10;<p>Beschreibung...</p>&#10;<div class=&quot;warning-box&quot;>...</div>">${isEdit ? _esc(mod.content) : ''}</textarea>
+          </div>
+
+          <div style="display:flex;gap:12px;justify-content:flex-end;">
+            <button type="button" onclick="closeAddTrainingModal()"
+              style="padding:11px 22px;border:2px solid #e0e0e0;border-radius:8px;background:#f5f5f5;font-weight:600;cursor:pointer;">
+              Abbrechen
+            </button>
+            <button type="submit"
+              style="padding:11px 28px;background:#2d5a3d;color:white;border:none;border-radius:8px;font-weight:700;cursor:pointer;font-size:1rem;">
+              💾 Speichern
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>`;
+
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+
+    // Außen-Klick schließt Modal
+    document.getElementById('addTrainingModal').addEventListener('click', function(e) {
+        if (e.target === this) closeAddTrainingModal();
+    });
+
+    // Form-Submit
+    document.getElementById('addTrainingForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        await _saveTraining();
+    });
+}
+
+// ──────────────────────────────────────────────────
+// Intern: Speichern (POST oder PUT)
+// ──────────────────────────────────────────────────
+
+async function _saveTraining() {
+    const form    = document.getElementById('addTrainingForm');
+    const editId  = form ? form.dataset.editId : null;
+
+    const payload = {
+        title:       document.getElementById('trainingTitle').value.trim(),
+        description: document.getElementById('trainingDescription').value.trim(),
+        content:     document.getElementById('trainingContent').value.trim(),
+        category:    document.getElementById('trainingCategory').value,
+        icon:        document.getElementById('trainingIcon').value.trim() || '📚',
+        published:   document.getElementById('trainingPublished').checked,
+        order_index: parseInt(document.getElementById('trainingOrder').value || '0'),
+    };
+
+    if (!payload.title || !payload.description || !payload.content || !payload.category) {
+        alert('Bitte alle Pflichtfelder ausfüllen (Titel, Beschreibung, Inhalt, Kategorie)');
+        return;
+    }
+
+    if (typeof showLoading === 'function') showLoading();
+
+    try {
+        const url    = editId ? `http://localhost:3000/api/training/${editId}` : 'http://localhost:3000/api/training';
+        const method = editId ? 'PUT' : 'POST';
+
+        const response = await fetch(url, {
+            method,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${getToken()}`
+            },
+            body: JSON.stringify(payload)
+        });
+
+        if (response.ok) {
+            const msg = editId ? 'Modul erfolgreich aktualisiert!' : 'Modul erfolgreich erstellt!';
+            if (typeof showNotification === 'function') showNotification(msg, 'success');
+            closeAddTrainingModal();
+            await loadAdminTrainings();
+            // Learn-Seite im Frontend ebenfalls neu laden
+            if (typeof initializeLearnPage === 'function') initializeLearnPage();
+        } else {
+            const err = await response.json();
+            alert('Fehler: ' + (err.error || 'Unbekannter Fehler'));
+        }
+    } catch (error) {
+        console.error('Save training error:', error);
+        alert('Verbindungsfehler – bitte Backend prüfen.');
+    } finally {
+        if (typeof hideLoading === 'function') hideLoading();
+    }
+}
+
+// ──────────────────────────────────────────────────
+// Hilfsfunktion: HTML-Sonderzeichen escapen (für value-Attribute)
+// ──────────────────────────────────────────────────
+function _esc(str) {
+    return String(str || '')
+        .replace(/&/g, '&amp;')
+        .replace(/"/g, '&quot;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+}
+
+// ──────────────────────────────────────────────────
+// Global Exports
+// ──────────────────────────────────────────────────
+window.showAddTrainingModal  = showAddTrainingModal;
+window.closeAddTrainingModal = closeAddTrainingModal;
+window.loadAdminTrainings    = loadAdminTrainings;
+window.deleteTraining        = deleteTraining;
+
+console.log('✅ Training-Management CRUD vollständig geladen');
 
 // Global Exports
 window.showAddQuizModal = showAddQuizModal;

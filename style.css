@@ -1358,3 +1358,395 @@ table tbody tr:hover {
         overflow-x: auto;
     }
 }
+
+/* =============================================
+   CALLSAFE FOOTER — VOLLSTÄNDIGER CSS-BLOCK
+   ============================================= */
+
+.cs-hero-download {
+    position: relative;
+    width: 100%;
+    min-height: 420px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.cs-hero-download__bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('../images/hero-senior.jpg');
+    background-size: cover;
+    background-position: center 20%;
+    background-repeat: no-repeat;
+    filter: brightness(0.45);
+    z-index: 0;
+}
+.cs-hero-download__content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 3rem 1.5rem;
+    max-width: 600px;
+}
+.cs-hero-download__shield { font-size: 3.5rem; margin-bottom: 0.75rem; display: block; }
+.cs-hero-download__title { font-size: 3rem; font-weight: 800; color: #ffffff; letter-spacing: -0.5px; margin: 0 0 0.5rem 0; line-height: 1.1; }
+.cs-hero-download__subtitle { font-size: 1.35rem; color: rgba(255,255,255,0.9); margin: 0 0 2rem 0; font-weight: 400; }
+.cs-hero-download__btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    background-color: #2d5a3d; color: #ffffff; border: none;
+    border-radius: 50px; padding: 1rem 2.2rem; font-size: 1.15rem;
+    font-weight: 700; cursor: pointer; text-decoration: none;
+    transition: background-color 0.2s ease, transform 0.15s ease;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.35);
+}
+.cs-hero-download__btn:hover { background-color: #1e4029; transform: translateY(-2px); }
+.cs-hero-download__btn-icon { font-size: 1.4rem; }
+.cs-hero-download__hint { margin-top: 1rem; font-size: 0.9rem; color: rgba(255,255,255,0.65); }
+
+.cs-footer { background-color: #1a2e23; color: #d4e2d8; padding: 3rem 1.5rem 1.5rem; }
+.cs-footer__inner { max-width: 1100px; margin: 0 auto; }
+.cs-footer__columns {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    gap: 2.5rem; padding-bottom: 2.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+.cs-footer__logo-wrap { display: flex; flex-direction: column; gap: 1rem; }
+.cs-footer__logo-placeholder { display: flex; align-items: center; gap: 10px; }
+.cs-footer__logo-icon {
+    width: 48px; height: 48px; background-color: #2d5a3d;
+    border-radius: 12px; display: flex; align-items: center;
+    justify-content: center; font-size: 1.6rem;
+}
+.cs-footer__logo-text { font-size: 1.6rem; font-weight: 800; color: #ffffff; letter-spacing: -0.3px; }
+.cs-footer__tagline { font-size: 0.95rem; color: rgba(255,255,255,0.55); line-height: 1.6; max-width: 200px; }
+.cs-footer__col-title { font-size: 1.05rem; font-weight: 700; color: #ffffff; margin: 0 0 1.2rem 0; letter-spacing: 0.03em; }
+.cs-footer__links { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.75rem; }
+.cs-footer__links a { color: #a8c4b2; text-decoration: none; font-size: 1rem; transition: color 0.2s ease; display: flex; align-items: center; gap: 6px; }
+.cs-footer__links a:hover { color: #ffffff; }
+.cs-footer__social-grid { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 0.25rem; }
+.cs-footer__social-btn {
+    width: 48px; height: 48px; border-radius: 50%;
+    background-color: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    display: flex; align-items: center; justify-content: center;
+    transition: background-color 0.2s ease, transform 0.15s ease;
+    cursor: pointer; text-decoration: none;
+}
+.cs-footer__social-btn:hover { background-color: rgba(255,255,255,0.18); transform: translateY(-2px); }
+.cs-footer__social-btn svg { width: 22px; height: 22px; fill: #ffffff; }
+.cs-footer__bottom {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-top: 1.5rem; gap: 1rem; flex-wrap: wrap;
+}
+.cs-footer__copy { font-size: 0.875rem; color: rgba(255,255,255,0.4); }
+.cs-footer__trust { display: flex; align-items: center; gap: 6px; font-size: 0.875rem; color: rgba(255,255,255,0.4); }
+
+@media (max-width: 768px) {
+    .cs-hero-download__title { font-size: 2.2rem; }
+    .cs-hero-download__subtitle { font-size: 1.15rem; }
+    .cs-footer__columns { grid-template-columns: 1fr; gap: 2rem; }
+    .cs-footer__bottom { flex-direction: column; align-items: flex-start; }
+}
+@media (max-width: 480px) {
+    .cs-hero-download__title { font-size: 1.8rem; }
+    .cs-hero-download__btn { font-size: 1rem; padding: 0.9rem 1.8rem; }
+}
+
+/* ================================================
+   CALLSAFE — SCHRITT 2: CSS ans Ende von style.css
+   ================================================ */
+
+/* === Overlay (dunkler Hintergrund) === */
+.cs-info-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    backdrop-filter: blur(3px);
+}
+.cs-info-overlay.open {
+    display: flex;
+}
+
+/* === Modal-Box === */
+.cs-info-modal {
+    background: #ffffff;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 680px;
+    max-height: 88vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+    overflow: hidden;
+}
+
+/* === Header === */
+.cs-info-modal__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 1.5rem;
+    background: #1a2e23;
+    color: #ffffff;
+    flex-shrink: 0;
+}
+.cs-info-modal__header h2 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin: 0;
+    color: #ffffff;
+}
+.cs-info-modal__close {
+    background: rgba(255,255,255,0.15);
+    border: none;
+    color: #ffffff;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    flex-shrink: 0;
+}
+.cs-info-modal__close:hover {
+    background: rgba(255,255,255,0.3);
+}
+
+/* === Scrollbarer Body === */
+.cs-info-modal__body {
+    overflow-y: auto;
+    padding: 1.75rem 1.75rem 2rem;
+    flex: 1;
+}
+.cs-info-modal__body h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #1a2e23;
+    margin: 1.5rem 0 0.5rem;
+    padding-bottom: 0.35rem;
+    border-bottom: 2px solid #e8f5ee;
+}
+.cs-info-modal__body h3:first-child {
+    margin-top: 0;
+}
+.cs-info-modal__body p {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: #444;
+    margin: 0 0 0.75rem;
+}
+.cs-info-modal__body ul {
+    padding-left: 1.5rem;
+    margin: 0 0 0.75rem;
+}
+.cs-info-modal__body ul li {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: #444;
+    margin-bottom: 0.25rem;
+}
+.cs-info-modal__body a {
+    color: #2d5a3d;
+    text-decoration: underline;
+}
+.cs-info-modal__body a:hover {
+    color: #1a2e23;
+}
+
+/* === Stand-Datum === */
+.cs-info-stand {
+    display: inline-block;
+    background: #e8f5ee;
+    color: #2d5a3d;
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 1.25rem !important;
+}
+
+/* === Hero-Banner (Über uns) === */
+.cs-info-hero-banner {
+    background: linear-gradient(135deg, #1a2e23, #2d5a3d);
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+.cs-info-hero-banner span {
+    font-size: 3rem;
+    flex-shrink: 0;
+}
+.cs-info-hero-banner p {
+    color: #ffffff !important;
+    font-size: 1rem !important;
+    font-weight: 500;
+    margin: 0 !important;
+    line-height: 1.5 !important;
+}
+
+/* === Grundpfeiler-Cards (Über uns) === */
+.cs-info-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin: 0.5rem 0 1rem;
+}
+.cs-info-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    background: #f7fdf9;
+    border: 1px solid #d4ede0;
+    border-radius: 10px;
+    padding: 1rem;
+}
+.cs-info-card span {
+    font-size: 1.75rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+.cs-info-card strong {
+    display: block;
+    font-size: 0.95rem;
+    color: #1a2e23;
+    margin-bottom: 0.25rem;
+}
+.cs-info-card p {
+    margin: 0 !important;
+    font-size: 0.88rem !important;
+    color: #666 !important;
+}
+
+/* === Versprechen-Box (Über uns) === */
+.cs-info-promise {
+    background: #f7fdf9;
+    border-left: 4px solid #2d5a3d;
+    border-radius: 0 10px 10px 0;
+    padding: 1.25rem 1.5rem;
+    margin-top: 1rem;
+}
+.cs-info-promise h3 {
+    border-bottom: none !important;
+    margin-top: 0 !important;
+    margin-bottom: 0.5rem !important;
+}
+
+/* === Kontakt-Grid === */
+.cs-info-kontakt-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin: 0.75rem 0 1rem;
+}
+.cs-info-kontakt-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    background: #f7fdf9;
+    border: 1px solid #d4ede0;
+    border-radius: 10px;
+    padding: 1rem;
+}
+.cs-info-kontakt-item span {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+.cs-info-kontakt-item strong {
+    display: block;
+    font-size: 0.85rem;
+    color: #1a2e23;
+    margin-bottom: 0.2rem;
+}
+.cs-info-kontakt-item p {
+    margin: 0 !important;
+    font-size: 0.9rem !important;
+}
+.cs-info-kontakt-item small {
+    font-size: 0.78rem;
+    color: #888;
+}
+
+/* === Trennlinie === */
+.cs-info-divider {
+    border: none;
+    border-top: 2px solid #e8f5ee;
+    margin: 1.5rem 0;
+}
+
+/* === Impressum-Block === */
+.cs-info-impressum {
+    background: #f9f9f9;
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+.cs-info-impressum p {
+    margin: 0 !important;
+    font-size: 0.92rem !important;
+}
+
+/* === Hinweis-Box === */
+.cs-info-hinweis {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    background: #fff8e1;
+    border: 1px solid #ffe082;
+    border-radius: 10px;
+    padding: 1rem;
+    margin-top: 1.25rem;
+}
+.cs-info-hinweis span {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+.cs-info-hinweis p {
+    margin: 0 !important;
+    font-size: 0.88rem !important;
+    color: #5a4000 !important;
+}
+
+/* === Responsive === */
+@media (max-width: 600px) {
+    .cs-info-kontakt-grid {
+        grid-template-columns: 1fr;
+    }
+    .cs-info-modal__body {
+        padding: 1.25rem;
+    }
+    .cs-info-hero-banner {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+/* === Abmelden-Button (Nav) === */
+#logoutBtn,
+.nav-btn--logout {
+    margin-left: auto;
+    color: var(--color-text-light);
+    border: 2px solid var(--color-border);
+    background: transparent;
+}
+
+#logoutBtn:hover,
+.nav-btn--logout:hover {
+    background: #fff5f5;
+    color: var(--color-danger);
+    border-color: var(--color-danger);
+    transform: translateY(-2px);
+}
