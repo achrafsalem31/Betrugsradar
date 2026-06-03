@@ -584,6 +584,290 @@ window.editQuiz = (id) => alert('Edit Quiz feature coming soon!');
 window.loadAdminQuizzes = loadAdminQuizzes;
 window.loadAdminTrainings = loadAdminTrainings;
 window.deleteTraining = deleteTraining;
-window.editTraining = (id) => alert('Edit Training feature coming soon!');
+
+
+// ===================================
+// TRAINING CRUD — FIX
+// ===================================
+// ANLEITUNG:
+// Öffne admin-management-complete.js
+// Suche ganz unten die Zeile:
+//   window.editTraining = (id) => alert('Edit Training feature coming soon!');
+// Ersetze sie durch:
+//   window.editTraining = editTraining;
+//
+// Dann füge DIESEN gesamten Block
+// DIREKT VOR der letzten Zeile:
+//   console.log('✅ Komplettes Admin Management System geladen');
+// ein.
+// ===================================
+
+
+// ===================================
+// showAddTrainingModal — Neues Modul
+// ===================================
+function showAddTrainingModal() {
+    // Falls Modal schon offen ist, nicht nochmal öffnen
+    if (document.getElementById('add-training-modal')) return;
+
+    const modalHTML = `
+        <div id="add-training-modal" style="
+            position: fixed; z-index: 9999; inset: 0;
+            background: rgba(0,0,0,0.55);
+            display: flex; align-items: flex-start;
+            justify-content: center; padding: 40px 16px;
+            overflow-y: auto;
+        ">
+            <div style="
+                background: #fff; border-radius: 12px;
+                padding: 28px; width: 100%; max-width: 680px;
+                box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+                position: relative;
+            ">
+                <span onclick="closeAddTrainingModal()" style="
+                    position: absolute; right: 18px; top: 14px;
+                    font-size: 26px; cursor: pointer; color: #555;
+                    line-height: 1;">&times;</span>
+
+                <h2 style="color: #2d5a3d; margin-bottom: 20px;">📚 Neues Training erstellen</h2>
+
+                <form id="add-training-form">
+
+                    <!-- Titel -->
+                    <div style="margin-bottom: 14px;">
+                        <label style="font-weight:600; display:block; margin-bottom:5px;">Titel *</label>
+                        <input type="text" id="training-title" placeholder="z.B. Enkeltrick erkennen" required
+                            style="width:100%; padding:10px; border:2px solid #e0e0e0; border-radius:8px; font-size:15px;">
+                    </div>
+
+                    <!-- Beschreibung -->
+                    <div style="margin-bottom: 14px;">
+                        <label style="font-weight:600; display:block; margin-bottom:5px;">Kurzbeschreibung *</label>
+                        <textarea id="training-description" rows="2" placeholder="Worum geht es in diesem Modul?" required
+                            style="width:100%; padding:10px; border:2px solid #e0e0e0; border-radius:8px; font-size:15px; resize:vertical;"></textarea>
+                    </div>
+
+                    <!-- Inhalt -->
+                    <div style="margin-bottom: 14px;">
+                        <label style="font-weight:600; display:block; margin-bottom:5px;">Inhalt * (HTML erlaubt)</label>
+                        <textarea id="training-content" rows="7"
+                            placeholder="&lt;h3&gt;Was ist der Enkeltrick?&lt;/h3&gt;&lt;p&gt;...&lt;/p&gt;" required
+                            style="width:100%; padding:10px; border:2px solid #e0e0e0; border-radius:8px; font-size:14px; font-family:monospace; resize:vertical;"></textarea>
+                        <small style="color:#888;">Du kannst HTML-Tags wie &lt;h3&gt;, &lt;p&gt;, &lt;ul&gt;, &lt;li&gt; verwenden.</small>
+                    </div>
+
+                    <!-- Kategorie + Icon (2 Spalten) -->
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:14px;">
+                        <div>
+                            <label style="font-weight:600; display:block; margin-bottom:5px;">Kategorie *</label>
+                            <select id="training-category" required
+                                style="width:100%; padding:10px; border:2px solid #e0e0e0; border-radius:8px; font-size:15px;">
+                                <option value="">Bitte wählen...</option>
+                                <option value="enkeltrick">👵 Enkeltrick</option>
+                                <option value="polizei">👮 Falsche Polizisten</option>
+                                <option value="schock">🚨 Schockanruf</option>
+                                <option value="bank">🏦 Bank-Betrug</option>
+                                <option value="techsupport">💻 Tech-Support</option>
+                                <option value="gewinnspiel">🎁 Gewinnspiel</option>
+                                <option value="allgemein">🎯 Allgemein</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label style="font-weight:600; display:block; margin-bottom:5px;">Icon (Emoji)</label>
+                            <input type="text" id="training-icon" value="📚" maxlength="4"
+                                style="width:100%; padding:10px; border:2px solid #e0e0e0; border-radius:8px; font-size:22px; text-align:center;">
+                        </div>
+                    </div>
+
+                    <!-- Reihenfolge + Status (2 Spalten) -->
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:22px;">
+                        <div>
+                            <label style="font-weight:600; display:block; margin-bottom:5px;">Reihenfolge</label>
+                            <input type="number" id="training-order" value="0" min="0"
+                                style="width:100%; padding:10px; border:2px solid #e0e0e0; border-radius:8px; font-size:15px;">
+                        </div>
+                        <div>
+                            <label style="font-weight:600; display:block; margin-bottom:5px;">Status</label>
+                            <select id="training-published"
+                                style="width:100%; padding:10px; border:2px solid #e0e0e0; border-radius:8px; font-size:15px;">
+                                <option value="true">✅ Veröffentlicht</option>
+                                <option value="false">📝 Entwurf</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Buttons -->
+                    <div style="display:flex; gap:10px; justify-content:flex-end;">
+                        <button type="button" onclick="closeAddTrainingModal()"
+                            style="padding:10px 22px; border:2px solid #e0e0e0; border-radius:8px; background:#f5f5f5; font-weight:600; cursor:pointer;">
+                            Abbrechen
+                        </button>
+                        <button type="submit"
+                            style="padding:10px 26px; background:#2d5a3d; color:white; border:none; border-radius:8px; font-weight:600; cursor:pointer; font-size:15px;">
+                            💾 Speichern
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    `;
+
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+
+    document.getElementById('add-training-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        await handleAddTraining();
+    });
+}
+
+// ===================================
+// handleAddTraining — Speichern
+// ===================================
+async function handleAddTraining() {
+    const title       = document.getElementById('training-title').value.trim();
+    const description = document.getElementById('training-description').value.trim();
+    const content     = document.getElementById('training-content').value.trim();
+    const category    = document.getElementById('training-category').value;
+    const icon        = document.getElementById('training-icon').value.trim() || '📚';
+    const order_index = parseInt(document.getElementById('training-order').value) || 0;
+    const published   = document.getElementById('training-published').value === 'true';
+
+    if (!title || !description || !content || !category) {
+        showNotification('Bitte alle Pflichtfelder ausfüllen', 'error');
+        return;
+    }
+
+    showLoading();
+
+    try {
+        const response = await fetch(`${window.API_URL}/training`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${getToken()}`
+            },
+            body: JSON.stringify({ title, description, content, category, icon, published, order_index })
+        });
+
+        if (response.ok) {
+            showNotification('Training-Modul erfolgreich erstellt!', 'success');
+            closeAddTrainingModal();
+            await loadAdminTrainings();
+        } else {
+            const data = await response.json();
+            showNotification(data.error || 'Fehler beim Erstellen', 'error');
+        }
+    } catch (error) {
+        console.error('Create training error:', error);
+        showNotification('Fehler beim Erstellen', 'error');
+    } finally {
+        hideLoading();
+    }
+}
+
+// ===================================
+// closeAddTrainingModal
+// ===================================
+function closeAddTrainingModal() {
+    const modal = document.getElementById('add-training-modal');
+    if (modal) modal.remove();
+}
+
+// ===================================
+// editTraining — Modul bearbeiten
+// ===================================
+async function editTraining(trainingId) {
+    showLoading();
+
+    let module;
+    try {
+        const response = await fetch(`${window.API_URL}/training/${trainingId}`, {
+            headers: { 'Authorization': `Bearer ${getToken()}` }
+        });
+        const data = await response.json();
+        module = data.module;
+    } catch (err) {
+        showNotification('Fehler beim Laden des Trainings', 'error');
+        hideLoading();
+        return;
+    }
+
+    hideLoading();
+
+    if (!module) {
+        showNotification('Training nicht gefunden', 'error');
+        return;
+    }
+
+    // Modal öffnen (nutzt dieselbe showAddTrainingModal-Funktion)
+    showAddTrainingModal();
+
+    // Titel anpassen
+    const modalTitle = document.querySelector('#add-training-modal h2');
+    if (modalTitle) modalTitle.textContent = '✏️ Training bearbeiten';
+
+    // Felder befüllen
+    document.getElementById('training-title').value       = module.title       || '';
+    document.getElementById('training-description').value = module.description || '';
+    document.getElementById('training-content').value     = module.content     || '';
+    document.getElementById('training-category').value    = module.category    || '';
+    document.getElementById('training-icon').value        = module.icon        || '📚';
+    document.getElementById('training-order').value       = module.order_index ?? 0;
+    document.getElementById('training-published').value   = module.published ? 'true' : 'false';
+
+    // Submit-Handler überschreiben → PUT statt POST
+    const form = document.getElementById('add-training-form');
+    form.replaceWith(form.cloneNode(true)); // Alten Listener entfernen
+
+    document.getElementById('add-training-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const title       = document.getElementById('training-title').value.trim();
+        const description = document.getElementById('training-description').value.trim();
+        const content     = document.getElementById('training-content').value.trim();
+        const category    = document.getElementById('training-category').value;
+        const icon        = document.getElementById('training-icon').value.trim() || '📚';
+        const order_index = parseInt(document.getElementById('training-order').value) || 0;
+        const published   = document.getElementById('training-published').value === 'true';
+
+        if (!title || !description || !content || !category) {
+            showNotification('Bitte alle Pflichtfelder ausfüllen', 'error');
+            return;
+        }
+
+        showLoading();
+        try {
+            const response = await fetch(`${window.API_URL}/training/${trainingId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${getToken()}`
+                },
+                body: JSON.stringify({ title, description, content, category, icon, published, order_index })
+            });
+
+            if (response.ok) {
+                showNotification('Training erfolgreich aktualisiert!', 'success');
+                closeAddTrainingModal();
+                await loadAdminTrainings();
+            } else {
+                const data = await response.json();
+                showNotification(data.error || 'Fehler beim Speichern', 'error');
+            }
+        } catch (err) {
+            showNotification('Fehler beim Speichern', 'error');
+        } finally {
+            hideLoading();
+        }
+    });
+}
+
+// ===================================
+// window-Exports (ersetzen die alten Platzhalter)
+// ===================================
+window.showAddTrainingModal  = showAddTrainingModal;
+window.closeAddTrainingModal = closeAddTrainingModal;
+window.editTraining          = editTraining;       // überschreibt den alten alert()-Platzhalter
 
 console.log('✅ Komplettes Admin Management System geladen');

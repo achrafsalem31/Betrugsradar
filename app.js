@@ -798,5 +798,3 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 });
-
-dd
