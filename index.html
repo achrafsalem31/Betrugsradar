@@ -165,7 +165,6 @@
             <button class="admin-tab" data-tab="numbers">📱 Nummern</button>
             <button class="admin-tab" data-tab="quiz">🎯 Quiz</button>
             <button class="admin-tab" data-tab="training">📚 Trainings</button>
-            <button class="admin-tab" data-tab="users">👥 Benutzer</button>
         </div>
 
         <!-- 1. Dashboard Tab -->
@@ -232,15 +231,6 @@
             <div id="trainings-list"></div>
         </div>
 
-        <!-- 5. Users Tab -->
-        <div id="users-tab" class="admin-tab-content">
-            <div style="margin-bottom: 20px;">
-                <button onclick="alert('User-Verwaltung kommt bald!')" class="btn btn-secondary">🔄 Aktualisieren</button>
-            </div>
-            <div id="users-list">
-                <p style="padding: 20px; text-align: center; color: #666;">User-Verwaltung wird bald implementiert</p>
-            </div>
-        </div>
 
     </div>
 </section>
@@ -462,7 +452,6 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>
 
 
-  <!-- CALLSAFE — Floating Contact Button -->
 
 
 </body> 
@@ -471,14 +460,13 @@ document.addEventListener('DOMContentLoaded', () => {
 <!-- Floating Button -->
 <button class="contact-float-btn" id="contactFloatBtn" aria-label="Kontakt aufnehmen">
     ✉️
-    <span class="float-label">Kontaktieren Se uns</span>
+    <span class="float-label">Kontaktieren Sie uns</span>
 </button>
 
-<!-- Overlay + Modal -->
+<!-- Overlay -->
 <div class="contact-overlay" id="contactOverlay" role="dialog" aria-modal="true" aria-labelledby="contactModalTitle">
     <div class="contact-modal" id="contactModal">
 
-        <!-- Header -->
         <div class="contact-modal-header">
             <div style="display:flex;align-items:center;gap:12px;">
                 <div class="contact-modal-header-icon">📬</div>
@@ -569,7 +557,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-<!-- Modal: Datenschutz -->
+<!-- Datenschutz -->
 <div class="cs-info-overlay" id="csModalDatenschutz" role="dialog" aria-modal="true" aria-labelledby="csTitleDatenschutz">
   <div class="cs-info-modal">
     <div class="cs-info-modal__header">
@@ -637,7 +625,7 @@ document.addEventListener('DOMContentLoaded', () => {
   </div>
 </div>
 
-<!-- Modal: Über uns -->
+<!-- Über uns -->
 <div class="cs-info-overlay" id="csModalUeberUns" role="dialog" aria-modal="true" aria-labelledby="csTitleUeberUns">
   <div class="cs-info-modal">
     <div class="cs-info-modal__header">
@@ -694,7 +682,7 @@ document.addEventListener('DOMContentLoaded', () => {
   </div>
 </div>
 
-<!-- Modal: Kontakt & Impressum -->
+<!-- Kontakt & Impressum -->
 <div class="cs-info-overlay" id="csModalKontakt" role="dialog" aria-modal="true" aria-labelledby="csTitleKontakt">
   <div class="cs-info-modal">
     <div class="cs-info-modal__header">

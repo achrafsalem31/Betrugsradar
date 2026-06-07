@@ -37,7 +37,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initializePWA();
     loadStats();
     
-    // 🎯 شحن الكويزات من Supabase ديريكت غير تشعل الصفحة!
     if (typeof loadAdminQuizzes === 'function') {
         loadAdminQuizzes();
     }
@@ -55,7 +54,6 @@ function initializeNavigation() {
                 logoutBtn.style.display = 'none';
             }
             
-            // Laisse admin-system.js gérer entièrement la navigation admin
             if (page === 'admin') {
                 return;
             }
@@ -171,31 +169,20 @@ function displayCheckResult(result) {
 }
 
 
-// ===================================
-// LEARN PAGE — Dynamisch aus Supabase
-// Diese Funktionen ERSETZEN den alten
-// initializeLearnPage / showLearnDetail Block in app.js
-// ===================================
 
-// Globaler Cache: einmal laden, mehrfach nutzen
 window.allTrainingModules = [];
 
-/**
- * Lerninhalte von der API laden und Karten rendern.
- * Ersetzt: initializeLearnPage()
- */
+
 async function initializeLearnPage() {
     const grid = document.querySelector('.learn-grid');
     const backBtn = document.querySelector('.back-btn');
 
     if (!grid) return;
 
-    // Zurück-Button bleibt statisch
     if (backBtn) {
         backBtn.addEventListener('click', hideLearnDetail);
     }
 
-    // Skeleton-Platzhalter während des Ladens
     grid.innerHTML = `
         <div style="grid-column:1/-1; text-align:center; padding:2rem; color:#666;">
             <div class="loading-spinner" style="margin:0 auto 1rem;"></div>
@@ -207,7 +194,6 @@ async function initializeLearnPage() {
         const data = await response.json();
         const modules = data.modules || [];
 
-        // Globalen Cache befüllen (für Admin-Panel und showLearnDetail)
         window.allTrainingModules = modules;
 
         if (modules.length === 0) {
@@ -215,7 +201,6 @@ async function initializeLearnPage() {
             return;
         }
 
-        // Karten dynamisch rendern
         grid.innerHTML = '';
         modules.forEach(mod => {
             const card = document.createElement('div');
@@ -245,12 +230,10 @@ async function initializeLearnPage() {
  * @param {object|null} mod    - Modul-Objekt aus der DB
  */
 function showLearnDetail(topic, mod) {
-    // Entweder Modul direkt übergeben, oder im Cache nachschlagen
     let content = mod;
     if (!content && topic) {
         content = window.allTrainingModules.find(m => m.category === topic || m.id === topic);
     }
-    // Fallback auf alten hardcodierten Inhalt (für Rückwärtskompatibilität)
     if (!content && topic && typeof learningContent !== 'undefined' && learningContent[topic]) {
         content = { title: learningContent[topic].title, content: learningContent[topic].content };
     }
@@ -266,9 +249,6 @@ function showLearnDetail(topic, mod) {
     detailDiv.scrollIntoView({ behavior: 'smooth' });
 }
 
-/**
- * Zurück zur Übersicht
- */
 function hideLearnDetail() {
     document.getElementById('learn-detail').classList.add('hidden');
     document.querySelector('.learn-grid').style.display = 'grid';
@@ -300,12 +280,9 @@ function startQuiz(topic) {
     appState.quizScore = 0;
     appState.quizAnswers = [];
 
-    // 🎯 الـلـمـسـة الـسِّـحْـرِيَّـة:
-    // إذا لقاو كويز جاي من Supabase كيطابق هاد الـ Category (Topic)، كنعوضو بيه الأسئلة ديريكت!
     if (window.allAdminQuizzes) {
         const dbQuiz = window.allAdminQuizzes.find(q => q.category === topic);
         if (dbQuiz && dbQuiz.questions) {
-            // تحويل التسميات إذا كان الباكند كيرد correct_answer والـ Frontend باغي correct
             quizQuestions[topic] = dbQuiz.questions.map(q => ({
                 question: q.question,
                 scenario: q.scenario || '',
@@ -706,7 +683,7 @@ function getCategoryName(category) {
     return names[category] || 'Unbekannt';
 }
 
-/* --- CallSafe Footer JS --- */
+/* --- CallSafe Footer --- */
 
 const csYearEl = document.getElementById('cs-footer-year');
 if (csYearEl) csYearEl.textContent = new Date().getFullYear();
@@ -729,26 +706,21 @@ if (csFooterInstallBtn) csFooterInstallBtn.addEventListener('click', csTriggerPw
 if (csFooterInstallLink) csFooterInstallLink.addEventListener('click', csTriggerPwaInstall);
 
 
-/* ================================================
-   CALLSAFE — SCHRITT 3: JS ans Ende von app.js
-   ================================================ */
 
-/* --- Modal öffnen / schließen --- */
 function csOpenModal(id) {
     const modal = document.getElementById(id);
     if (!modal) return;
     modal.classList.add('open');
-    document.body.style.overflow = 'hidden'; // Hintergrund nicht scrollbar
+    document.body.style.overflow = 'hidden'; 
 }
 
 function csCloseModal(id) {
     const modal = document.getElementById(id);
     if (!modal) return;
     modal.classList.remove('open');
-    document.body.style.overflow = ''; // Scroll wieder freigeben
+    document.body.style.overflow = ''; 
 }
 
-// Schließen wenn man auf den dunklen Hintergrund klickt
 document.querySelectorAll('.cs-info-overlay').forEach(overlay => {
     overlay.addEventListener('click', function(e) {
         if (e.target === overlay) {
@@ -758,7 +730,6 @@ document.querySelectorAll('.cs-info-overlay').forEach(overlay => {
     });
 });
 
-// Schließen mit ESC-Taste
 document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
         document.querySelectorAll('.cs-info-overlay.open').forEach(overlay => {
@@ -768,10 +739,8 @@ document.addEventListener('keydown', function(e) {
     }
 });
 
-/* --- Footer-Links verknüpfen --- */
 document.addEventListener('DOMContentLoaded', function () {
 
-    // Datenschutz-Link im Footer
     const linkDatenschutz = document.querySelector('[aria-label="Datenschutzerklärung"]');
     if (linkDatenschutz) {
         linkDatenschutz.addEventListener('click', function(e) {
@@ -780,7 +749,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Über uns-Link im Footer
     const linkUeberUns = document.querySelector('[aria-label="Über uns"]');
     if (linkUeberUns) {
         linkUeberUns.addEventListener('click', function(e) {
@@ -789,7 +757,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Kontakt-Link im Footer
     const linkKontakt = document.querySelector('[aria-label="Kontaktdaten"]');
     if (linkKontakt) {
         linkKontakt.addEventListener('click', function(e) {
