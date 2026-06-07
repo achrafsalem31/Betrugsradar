@@ -1,15 +1,4 @@
-// ===================================
-// KOMPLETTES ADMIN MANAGEMENT SYSTEM
-// Füge dies zu admin-system.js HINZU (am Ende)!
-// ===================================
-
-// ===================================
-// 1. NUMMERN-VERWALTUNG (CRUD)
-// ===================================
-
-/**
- * Setup Numbers Management
- */
+// Setup Numbers Management
 function setupNumbersManagement() {
     // Add Number Button
     const addBtn = document.getElementById('add-number-btn');
@@ -18,9 +7,8 @@ function setupNumbersManagement() {
     }
 }
 
-/**
- * Show Add Number Modal
- */
+// Show Add Number Modal
+ 
 function showAddNumberModal() {
     const modalHTML = `
         <div id="add-number-modal" class="modal">
@@ -73,9 +61,8 @@ function showAddNumberModal() {
     });
 }
 
-/**
- * Handle Add Number
- */
+// Handle Add Number
+
 async function handleAddNumber() {
     const phone = document.getElementById('new-phone').value.trim();
     const category = document.getElementById('new-category').value;
@@ -118,9 +105,7 @@ function closeAddNumberModal() {
     }
 }
 
-/**
- * Delete Number
- */
+
 async function deleteNumber(phone) {
     if (!confirm(`Nummer ${phone} wirklich löschen?`)) {
         return;
@@ -150,13 +135,10 @@ async function deleteNumber(phone) {
     }
 }
 
-// ===================================
-// 2. QUIZ-VERWALTUNG (CRUD)
-// ===================================
 
-/**
- * Load Quizzes for Admin
- */
+// QUIZ-VERWALTUNG 
+
+
 async function loadAdminQuizzes() {
     showLoading();
     
@@ -177,9 +159,8 @@ async function loadAdminQuizzes() {
     }
 }
 
-/**
- * Display Quizzes List
- */
+// Display Quizzes List
+ 
 function displayQuizzesList(quizzes) {
     const container = document.getElementById('quizzes-list');
     if (!container) return;
@@ -455,13 +436,10 @@ async function deleteQuiz(quizId) {
     }
 }
 
-// ===================================
-// 3. TRAININGS-VERWALTUNG (CRUD)
-// ===================================
 
-/**
- * Load Training Modules
- */
+// TRAININGS-VERWALTUNG 
+
+
 async function loadAdminTrainings() {
     showLoading();
     
@@ -561,18 +539,16 @@ async function deleteTraining(trainingId) {
 
 // ===================================
 // 4. INITIALIZATION
-// ===================================
 
-// Add to existing initializeAdminSystem() function:
+
 function enhancedInitializeAdminSystem() {
-    // Call original init
+   
     initializeAdminSystem();
     
-    // Setup additional management features
     setupNumbersManagement();
 }
 
-// Make functions global
+
 window.closeAddNumberModal = closeAddNumberModal;
 window.deleteNumber = deleteNumber;
 window.showAddQuizModal = showAddQuizModal;
@@ -586,28 +562,11 @@ window.loadAdminTrainings = loadAdminTrainings;
 window.deleteTraining = deleteTraining;
 
 
-// ===================================
-// TRAINING CRUD — FIX
-// ===================================
-// ANLEITUNG:
-// Öffne admin-management-complete.js
-// Suche ganz unten die Zeile:
-//   window.editTraining = (id) => alert('Edit Training feature coming soon!');
-// Ersetze sie durch:
-//   window.editTraining = editTraining;
-//
-// Dann füge DIESEN gesamten Block
-// DIREKT VOR der letzten Zeile:
-//   console.log('✅ Komplettes Admin Management System geladen');
-// ein.
-// ===================================
 
-
-// ===================================
 // showAddTrainingModal — Neues Modul
-// ===================================
+
 function showAddTrainingModal() {
-    // Falls Modal schon offen ist, nicht nochmal öffnen
+  
     if (document.getElementById('add-training-modal')) return;
 
     const modalHTML = `
@@ -721,9 +680,9 @@ function showAddTrainingModal() {
     });
 }
 
-// ===================================
+
 // handleAddTraining — Speichern
-// ===================================
+
 async function handleAddTraining() {
     const title       = document.getElementById('training-title').value.trim();
     const description = document.getElementById('training-description').value.trim();
@@ -800,14 +759,14 @@ async function editTraining(trainingId) {
         return;
     }
 
-    // Modal öffnen (nutzt dieselbe showAddTrainingModal-Funktion)
+    
     showAddTrainingModal();
 
-    // Titel anpassen
+    
     const modalTitle = document.querySelector('#add-training-modal h2');
     if (modalTitle) modalTitle.textContent = '✏️ Training bearbeiten';
 
-    // Felder befüllen
+    
     document.getElementById('training-title').value       = module.title       || '';
     document.getElementById('training-description').value = module.description || '';
     document.getElementById('training-content').value     = module.content     || '';
@@ -816,9 +775,9 @@ async function editTraining(trainingId) {
     document.getElementById('training-order').value       = module.order_index ?? 0;
     document.getElementById('training-published').value   = module.published ? 'true' : 'false';
 
-    // Submit-Handler überschreiben → PUT statt POST
+    
     const form = document.getElementById('add-training-form');
-    form.replaceWith(form.cloneNode(true)); // Alten Listener entfernen
+    form.replaceWith(form.cloneNode(true)); 
 
     document.getElementById('add-training-form').addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -863,11 +822,9 @@ async function editTraining(trainingId) {
     });
 }
 
-// ===================================
-// window-Exports (ersetzen die alten Platzhalter)
-// ===================================
+
 window.showAddTrainingModal  = showAddTrainingModal;
 window.closeAddTrainingModal = closeAddTrainingModal;
-window.editTraining          = editTraining;       // überschreibt den alten alert()-Platzhalter
+window.editTraining          = editTraining;       
 
 console.log('✅ Komplettes Admin Management System geladen');

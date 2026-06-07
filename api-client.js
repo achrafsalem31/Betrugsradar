@@ -247,13 +247,11 @@ window.DB = {
     searchNumbers: searchNumbersInDB
 };
 
-console.log('✅ API Client geladen');
-console.log('📊 Backend:', API_URL);
-console.log('🔌 window.API & window.DB bereit!');
+console.log('API Client geladen');
+console.log('Backend:', API_URL);
+console.log('window.API & window.DB bereit');
 
-// ==========================================
-// 🎯 QUIZ API FUNCTIONS (الإنشاء والتعديل والمسح)
-// ==========================================
+// QUIZ API FUNCTIONS 
 
 async function createQuiz(quizData) {
     try {
@@ -311,9 +309,8 @@ async function deleteQuiz(quizId) {
     }
 }
 
-// 🔗 ربط الدالات الجداد مع الـ window Object باش الـ Dashboard يقراهم
 window.API.createQuiz = createQuiz;
 window.API.updateQuiz = updateQuiz;
 window.API.deleteQuiz = deleteQuiz;
 
-console.log('🧠 Quiz API Funktionen erfolgreich an window.API gebunden!');
+console.log('Quiz API Funktionen erfolgreich an window.API gebunden');

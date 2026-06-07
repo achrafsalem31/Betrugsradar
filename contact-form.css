@@ -1,9 +1,7 @@
 /* ===================================
-   CALLSAFE — Contact Form System
-   Floating Button + Modal
+   CALLSAFE — Contact Form 
    =================================== */
 
-/* --- Floating Button --- */
 .contact-float-btn {
     position: fixed;
     bottom: 28px;
@@ -36,7 +34,6 @@
     transform: scale(0.96);
 }
 
-/* Pulse ring animation */
 .contact-float-btn::before {
     content: '';
     position: absolute;
@@ -52,7 +49,7 @@
     100% { transform: scale(1.35); opacity: 0; }
 }
 
-/* Tooltip label */
+
 .contact-float-btn .float-label {
     position: absolute;
     right: 72px;
@@ -86,7 +83,6 @@
     transform: translateX(0);
 }
 
-/* --- Overlay Backdrop --- */
 .contact-overlay {
     position: fixed;
     inset: 0;
@@ -108,7 +104,6 @@
     visibility: visible;
 }
 
-/* --- Modal Panel --- */
 .contact-modal {
     background: #fff;
     border-radius: 20px;
@@ -130,7 +125,6 @@
     opacity: 1;
 }
 
-/* --- Modal Header --- */
 .contact-modal-header {
     background: linear-gradient(135deg, #2d5a3d 0%, #4a8059 100%);
     color: #fff;
@@ -176,12 +170,10 @@
     background: rgba(255,255,255,0.28);
 }
 
-/* --- Modal Body --- */
 .contact-modal-body {
     padding: 22px 24px 24px;
 }
 
-/* --- Form Groups --- */
 .cf-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -267,7 +259,6 @@
     font-size: 0.85rem;
 }
 
-/* Field error message */
 .cf-field-error {
     font-size: 0.75rem;
     color: #dc2626;
@@ -395,7 +386,6 @@
     flex-shrink: 0;
 }
 
-/* --- Responsive: Mobile --- */
 @media (max-width: 540px) {
     .contact-overlay {
         padding: 0;

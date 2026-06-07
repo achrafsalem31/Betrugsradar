@@ -1,38 +1,32 @@
-
-
-// ===================================
-// 1. ADMIN LOGIN SYSTEM
-// ===================================
 console.log("🔥 ADMIN SYSTEM MODIFIED LOADED");
 document.addEventListener('DOMContentLoaded', () => {
     initializeAdminSystem();
 });
 
 function initializeAdminSystem() {
-    // Login Modal Handler
+    
     const loginForm = document.getElementById('login-form');
     const loginModal = document.getElementById('login-modal');
     const adminBtn = document.querySelector('[data-page="admin"]');
     
-    // Check if user clicks on Admin tab
+    
     if (adminBtn) {
         adminBtn.addEventListener('click', (e) => {
             e.preventDefault();
             
             // Check if user is already logged in as admin
             if (window.API.isLoggedIn() && window.API.isAdmin()) {
-                // Show admin page
+                
                 showPage('admin');
                 loadAdminDashboard();
             } else {
-                // Show login modal
+                
                 showLoginModal();
             }
         });
     }
     
-    // Login Form Submit
-    // Login Form Submit (FIX)
+    
 document.addEventListener('submit', async (e) => {
     if (e.target && e.target.id === 'login-form') {
         e.preventDefault();
@@ -41,7 +35,7 @@ document.addEventListener('submit', async (e) => {
     }
 });
     
-    // Close modal on outside click
+    
     if (loginModal) {
         loginModal.addEventListener('click', (e) => {
             if (e.target === loginModal) {
@@ -51,9 +45,7 @@ document.addEventListener('submit', async (e) => {
     }
 }
 
-/**
- * Show Login Modal
- */
+
 function showLoginModal() {
     const modal = document.getElementById('login-modal');
     const errorMsg = document.getElementById('login-error');
@@ -61,21 +53,19 @@ function showLoginModal() {
     if (modal) {
         modal.classList.remove('hidden');
         
-        // Clear previous errors
+        
         if (errorMsg) {
             errorMsg.classList.add('hidden');
             errorMsg.textContent = '';
         }
         
-        // Clear form
+       
         document.getElementById('login-email').value = '';
         document.getElementById('login-password').value = '';
     }
 }
 
-/**
- * Hide Login Modal
- */
+
 function hideLoginModal() {
     const modal = document.getElementById('login-modal');
     if (modal) {
@@ -83,9 +73,7 @@ function hideLoginModal() {
     }
 }
 
-/**
- * Handle Admin Login
- */
+
 async function handleAdminLogin() {
     const email = document.getElementById('login-email').value.trim();
     const password = document.getElementById('login-password').value;
@@ -116,13 +104,13 @@ async function handleAdminLogin() {
             return;
         }
 
-        // ✅ SUCCESS
+        
         hideLoginModal();
         showPage('admin');
         loadAdminDashboard();
         showNotification('Erfolgreich eingeloggt!', 'success');
 
-        // ننتظروا شوية حتى تسالي showPage خدمتها عاد نبينوا الزر
+        
         setTimeout(() => {
             const logoutBtn = document.getElementById('logoutBtn');
             if (logoutBtn) {
@@ -138,10 +126,8 @@ async function handleAdminLogin() {
         submitBtn.disabled = false;
         submitBtn.textContent = 'Login';
     }
-} // <--- هاد القوس هو اللي كيسد الدالة كاملة
-/**
- * Show login error message
- */
+} 
+
 function showLoginError(message) {
     const errorMsg = document.getElementById('login-error');
     if (errorMsg) {
@@ -150,13 +136,10 @@ function showLoginError(message) {
     }
 }
 
-// ===================================
-// 2. ADMIN DASHBOARD
-// ===================================
 
-/**
- * Load Admin Dashboard
- */
+// ADMIN DASHBOARD
+
+
 async function loadAdminDashboard() {
     console.log('📊 Loading Admin Dashboard...');
     
@@ -166,18 +149,15 @@ async function loadAdminDashboard() {
         return;
     }
     
-    // Show loading
+    
     showLoading();
     
     try {
-        // Load Statistics
         await loadAdminStatistics();
         
-        // Load Numbers List
         await loadAdminNumbersList();
         
-        // Setup event listeners
-        setupAdminEventListeners();
+       setupAdminEventListeners();
         
     } catch (error) {
         console.error('Dashboard error:', error);
@@ -187,21 +167,16 @@ async function loadAdminDashboard() {
     }
 }
 
-/**
- * Load Admin Statistics
- */
+
 async function loadAdminStatistics() {
     try {
         const stats = await window.API.getStatistics();
         
-        // Update stat cards
         document.getElementById('total-reports').textContent = stats.totalReports || 0;
         document.getElementById('blacklist-count').textContent = stats.totalNumbers || 0;
         
-        // Display categories
         displayCategoryStats(stats.byCategory || {});
         
-        // Get recent numbers
         const allNumbers = await window.API.getAllNumbers();
         displayRecentNumbers(allNumbers.slice(0, 5));
         
@@ -210,9 +185,7 @@ async function loadAdminStatistics() {
     }
 }
 
-/**
- * Display Category Statistics
- */
+
 function displayCategoryStats(byCategory) {
     const list = document.getElementById('category-list');
     if (!list) return;
@@ -277,9 +250,7 @@ function displayRecentNumbers(numbers) {
     });
 }
 
-/**
- * Load Numbers List for Admin
- */
+
 async function loadAdminNumbersList() {
     try {
         const numbers = await window.API.getAllNumbers();
@@ -289,9 +260,7 @@ async function loadAdminNumbersList() {
     }
 }
 
-/**
- * Display Numbers List
- */
+
 function displayNumbersList(numbers) {
     const list = document.getElementById('numbers-list');
     if (!list) return;
@@ -347,9 +316,7 @@ function displayNumbersList(numbers) {
     list.appendChild(table);
 }
 
-/**
- * Get Category Name
- */
+
 function getCategoryName(category) {
     const names = {
         enkeltrick: 'Enkeltrick',
@@ -363,11 +330,8 @@ function getCategoryName(category) {
     return names[category] || 'Unbekannt';
 }
 
-/**
- * Setup Admin Event Listeners
- */
+
 function setupAdminEventListeners() {
-    // Refresh button
     const refreshBtn = document.getElementById('refresh-numbers');
     if (refreshBtn) {
         refreshBtn.addEventListener('click', async () => {
@@ -378,7 +342,7 @@ function setupAdminEventListeners() {
         });
     }
     
-    // Search functionality
+    
     const searchInput = document.getElementById('number-search');
     if (searchInput) {
         searchInput.addEventListener('input', async (e) => {
@@ -394,15 +358,8 @@ function setupAdminEventListeners() {
     }
 }
 
-// ===================================
-// 3. NOTIFICATION SYSTEM
-// ===================================
 
-/**
- * Show Notification
- */
 function showNotification(message, type = 'info') {
-    // Remove existing notification
     const existing = document.querySelector('.notification');
     if (existing) {
         existing.remove();
@@ -435,16 +392,12 @@ function showNotification(message, type = 'info') {
     
     document.body.appendChild(notification);
     
-    // Auto remove after 3 seconds
     setTimeout(() => {
         notification.style.animation = 'slideOut 0.3s ease';
         setTimeout(() => notification.remove(), 300);
     }, 3000);
 }
 
-// ===================================
-// 4. LOADING HELPER
-// ===================================
 
 function showLoading() {
     const loading = document.getElementById('loading');
@@ -460,23 +413,19 @@ function hideLoading() {
     }
 }
 
-// ===================================
-// 5. PAGE NAVIGATION & LOGOUT CONTROL
-// ===================================
+
+// NAVIGATION und LOGOUT CONTROL
 
 function showPage(pageId) {
-    // 1. إخفاء كل الصفحات والأزرار
     document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
     document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
     
-    // 2. إظهار الصفحة والزر المختارين
     const targetPage = document.getElementById(`${pageId}-page`);
     if (targetPage) targetPage.classList.add('active');
     
     const targetBtn = document.querySelector(`[data-page="${pageId}"]`);
     if (targetBtn) targetBtn.classList.add('active');
 
-    // 🟢 3. التحكم في زر Abmelden: يبان فقط للآدمن وفي صفحة الإدارة
     const logoutBtn = document.getElementById('logoutBtn');
     const isLoggedIn = localStorage.getItem('token') !== null;
     
@@ -489,7 +438,6 @@ function showPage(pageId) {
     }
 }
 
-// ✅ معالجة تسجيل الخروج والتشغيل التلقائي
 document.addEventListener('click', (e) => {
     const btn = e.target.closest('#logoutBtn');
     if (btn) {
@@ -498,15 +446,12 @@ document.addEventListener('click', (e) => {
     }
 });
 
-// ✅ حل مشكل Ctrl+Shift+R (كيتأكد من الحالة غير كيتحل الموقع)
 window.addEventListener('load', () => {
     const isLoggedIn = localStorage.getItem('token') !== null;
     const logoutBtn = document.getElementById('logoutBtn');
     
-    // إذا كان الآدمن داخل ديجا، كنخليو السيستم واجد
     if (isLoggedIn && logoutBtn) {
-        console.log("🚀 Admin session active");
-        // إلا كان الموقع كيتحل نيشان على صفحة Admin، بين الزر
+        console.log("Admin session active");
         if (document.getElementById('admin-page').classList.contains('active')) {
             logoutBtn.style.setProperty('display', 'flex', 'important');
         }

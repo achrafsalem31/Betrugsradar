@@ -1,12 +1,8 @@
-// ===================================
-// CALLSAFE — Contact Form System
-// contact-form.js
-// ===================================
+// CALLSAFE — Contact Form 
 
 (function () {
     'use strict';
 
-    // ── DOM References ──────────────────────────────────────────
     const floatBtn     = document.getElementById('contactFloatBtn');
     const overlay      = document.getElementById('contactOverlay');
     const closeBtn     = document.getElementById('contactCloseBtn');
@@ -15,13 +11,11 @@
     const successBox   = document.getElementById('cfSuccess');
     const successClose = document.getElementById('cfSuccessClose');
 
-    if (!floatBtn || !overlay || !form) return; // guard: elements must exist
+    if (!floatBtn || !overlay || !form) return; 
 
-    // ── Open / Close ────────────────────────────────────────────
     function openModal() {
         overlay.classList.add('open');
         document.body.style.overflow = 'hidden';
-        // Focus first input after animation
         setTimeout(() => {
             const first = form.querySelector('input, select, textarea');
             if (first) first.focus();
@@ -37,17 +31,14 @@
     closeBtn.addEventListener('click', closeModal);
     successClose.addEventListener('click', closeModal);
 
-    // Close on backdrop click
     overlay.addEventListener('click', function (e) {
         if (e.target === overlay) closeModal();
     });
 
-    // Close on Escape key
     document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape' && overlay.classList.contains('open')) closeModal();
     });
 
-    // ── Validation ──────────────────────────────────────────────
     function setError(groupId, errorId, show) {
         const group = document.getElementById(groupId);
         const error = document.getElementById(errorId);
@@ -72,22 +63,18 @@
         const category = document.getElementById('cfCategory').value;
         const message  = document.getElementById('cfMessage').value.trim();
 
-        // Name
         const nameOk = name.length >= 2;
         setError('cfGroupName', 'cfErrorName', !nameOk);
         if (!nameOk) valid = false;
 
-        // Email
         const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
         setError('cfGroupEmail', 'cfErrorEmail', !emailOk);
         if (!emailOk) valid = false;
 
-        // Category
         const catOk = category !== '';
         setError('cfGroupCategory', 'cfErrorCategory', !catOk);
         if (!catOk) valid = false;
 
-        // Message
         const msgOk = message.length >= 10;
         setError('cfGroupMessage', 'cfErrorMessage', !msgOk);
         if (!msgOk) valid = false;
@@ -95,7 +82,6 @@
         return valid;
     }
 
-    // Live validation — clear error once user fixes a field
     ['cfName', 'cfEmail', 'cfCategory', 'cfMessage'].forEach(function (id) {
         const el = document.getElementById(id);
         if (!el) return;
@@ -111,7 +97,6 @@
         });
     });
 
-    // ── Submit ──────────────────────────────────────────────────
     form.addEventListener('submit', async function (e) {
         e.preventDefault();
 
@@ -157,7 +142,6 @@
         }
     });
 
-    // Reset form visibility when modal is closed and reopened
     overlay.addEventListener('transitionend', function () {
         if (!overlay.classList.contains('open')) {
             // Reset after close animation
@@ -165,7 +149,6 @@
                 form.style.display = '';
                 successBox.classList.remove('show');
                 form.reset();
-                // Clear all errors
                 ['cfGroupName','cfGroupEmail','cfGroupCategory','cfGroupMessage'].forEach(function (gid) {
                     const g = document.getElementById(gid);
                     if (g) {
