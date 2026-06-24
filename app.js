@@ -108,50 +108,6 @@ async function checkNumber() {
     saveStats();
 }
 
-function analyzeNumber(number) {
-    const whitelisted = database.whitelist.find(item => 
-        item.number === number
-    );
-    if (whitelisted) {
-        return {
-            status: 'safe',
-            title: '✅ SICHER',
-            reason: `Dies ist die offizielle Nummer: ${whitelisted.name}`,
-            category: 'Offizielle Nummer',
-            action: 'Sie können diese Nummer bedenkenlos annehmen.'
-        };
-    }
-    
-    const blacklisted = database.blacklist.find(item => 
-        item.number === number
-    );
-    if (blacklisted) {
-        const categoryNames = {
-            enkeltrick: 'Enkeltrick',
-            polizei: 'Falsche Polizisten',
-            gewinnspiel: 'Gewinnspiel-Betrug',
-            bank: 'Bank-Betrug',
-            schock: 'Schockanruf',
-            techsupport: 'Tech-Support'
-        };
-        
-        return {
-            status: 'danger',
-            title: '🚨 BETRUG BESTÄTIGT',
-            reason: `Diese Nummer wurde bereits ${blacklisted.reports}x als Betrug gemeldet!`,
-            category: `Kategorie: ${categoryNames[blacklisted.category]}`,
-            action: '⚠️ SOFORT AUFLEGEN! Nicht zurückrufen. Nummer blockieren.'
-        };
-    }
-    
-    return {
-        status: 'warning',
-        title: '⚠️ UNBEKANNT / VORSICHT',
-        reason: 'Diese Nummer ist uns noch nicht bekannt.',
-        category: 'Verdächtig bei: Geldforderung, Zeitdruck, Geheimniskrämerei',
-        action: '💡 Bei Geldforderung sofort auflegen! Im Zweifel Nummer hier melden.'
-    };
-}
 
 function displayCheckResult(result) {
     const resultDiv = document.getElementById('check-result');
@@ -707,61 +663,4 @@ if (csFooterInstallLink) csFooterInstallLink.addEventListener('click', csTrigger
 
 
 
-function csOpenModal(id) {
-    const modal = document.getElementById(id);
-    if (!modal) return;
-    modal.classList.add('open');
-    document.body.style.overflow = 'hidden'; 
-}
 
-function csCloseModal(id) {
-    const modal = document.getElementById(id);
-    if (!modal) return;
-    modal.classList.remove('open');
-    document.body.style.overflow = ''; 
-}
-
-document.querySelectorAll('.cs-info-overlay').forEach(overlay => {
-    overlay.addEventListener('click', function(e) {
-        if (e.target === overlay) {
-            overlay.classList.remove('open');
-            document.body.style.overflow = '';
-        }
-    });
-});
-
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-        document.querySelectorAll('.cs-info-overlay.open').forEach(overlay => {
-            overlay.classList.remove('open');
-        });
-        document.body.style.overflow = '';
-    }
-});
-
-document.addEventListener('DOMContentLoaded', function () {
-
-    const linkDatenschutz = document.querySelector('[aria-label="Datenschutzerklärung"]');
-    if (linkDatenschutz) {
-        linkDatenschutz.addEventListener('click', function(e) {
-            e.preventDefault();
-            csOpenModal('csModalDatenschutz');
-        });
-    }
-
-    const linkUeberUns = document.querySelector('[aria-label="Über uns"]');
-    if (linkUeberUns) {
-        linkUeberUns.addEventListener('click', function(e) {
-            e.preventDefault();
-            csOpenModal('csModalUeberUns');
-        });
-    }
-
-    const linkKontakt = document.querySelector('[aria-label="Kontaktdaten"]');
-    if (linkKontakt) {
-        linkKontakt.addEventListener('click', function(e) {
-            e.preventDefault();
-            csOpenModal('csModalKontakt');
-        });
-    }
-});
