@@ -63,58 +63,63 @@ function getCurrentUser() {
 }
 
 
-
 async function checkNumberInDB(phoneNumber) {
     try {
-        console.log('API.checkNumber reçu:', phoneNumber);
-
         const encodedPhone = encodeURIComponent(phoneNumber);
         const url = `${API_URL}/numbers/check/${encodedPhone}`;
-        console.log('URL appelée:', url);
-
+ 
         const response = await fetch(url);
-        console.log('Status réponse:', response.status);
-
         const rawText = await response.text();
-        console.log('Réponse brute:', rawText);
-
+ 
         let data;
         try {
             data = JSON.parse(rawText);
         } catch (e) {
-            throw new Error(`Réponse non JSON: ${rawText}`);
+            throw new Error(`Antwort kein JSON: ${rawText}`);
         }
-
-        if (!response.ok) throw new Error(data.error || 'Erreur backend');
-
+ 
+        if (!response.ok) throw new Error(data.error || 'Backend-Fehler');
+ 
+        // FALL 3: Nummer komplett unbekannt
         if (!data.found) {
             return {
                 status: 'warning',
-                title: '⚠️ UNBEKANNT',
-                reason: 'Diese Nummer wurde noch nicht gemeldet.',
-                category: 'Unbekannt',
-                action: 'Vorsichtig sein!'
+                title: 'ℹ️ UNBEKANNT / VORSICHT',
+                reason: 'Diese Nummer ist uns noch nicht bekannt.',
+                category: '',
+                action: 'Im Zweifel vorsichtig sein und nicht zurückrufen.'
             };
         }
-
+ 
+        // FALL 2: Nummer ist auf der Whitelist (sicher)
+        if (data.whitelisted) {
+            return {
+                status: 'safe',
+                title: '✅ SICHERE TELEFONNUMMER',
+                reason: `Diese Nummer ist vertrauenswürdig: ${data.data.name}`,
+                category: data.data.category || '',
+                action: 'Sie können diese Nummer bedenkenlos annehmen.'
+            };
+        }
+ 
+        // FALL 1: Nummer ist gemeldete Betrugsnummer
         const titles = {
-            safe: '✅ UNAUFFÄLLIG',
-            warning: '⚠️ VORSICHT',
-            danger: '🚨 BETRUG BESTÄTIGT'
+            danger: '🚨 BETRUG BESTÄTIGT',
+            warning: '⚠️ VORSICHT'
         };
-
+ 
         return {
             status: data.status,
-            title: titles[data.status] || '⚠️ UNBEKANNT',
+            title: titles[data.status] || '⚠️ VORSICHT',
             reason: data.message,
             category: data.data?.category || 'Unbekannt',
             action: data.status === 'danger'
-                ? 'Sofort auflegen!'
+                ? '⚠️ Sofort auflegen! Nicht zurückrufen. Nummer blockieren.'
                 : 'Vorsichtig sein!'
         };
+ 
     } catch (error) {
-        console.error('Check error complet:', error);
-
+        console.error('Check error:', error);
         return {
             status: 'warning',
             title: '⚠️ FEHLER',
@@ -124,6 +129,7 @@ async function checkNumberInDB(phoneNumber) {
         };
     }
 }
+
 
 async function reportNumberToDB(phoneNumber, category, details = '') {
     try {

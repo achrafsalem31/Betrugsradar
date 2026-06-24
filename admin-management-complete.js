@@ -548,6 +548,247 @@ function enhancedInitializeAdminSystem() {
     setupNumbersManagement();
 }
 
+// ===================================
+// QUIZ BEARBEITEN — FIX
+// ===================================
+// ANLEITUNG:
+// Öffne admin-management-complete.js
+// Gehe zu Zeile 559:
+//   window.editQuiz = (id) => alert('Edit Quiz feature coming soon!');
+//
+// Ersetze NUR diese eine Zeile durch:
+//   window.editQuiz = editQuiz;
+//
+// Dann füge die folgende editQuiz()-Funktion
+// DIREKT über den window.exports-Block ein
+// (also direkt über Zeile 552: window.closeAddNumberModal = ...)
+// ===================================
+
+
+async function editQuiz(quizId) {
+    showLoading();
+
+    // 1. Quiz mit allen Fragen vom Backend laden
+    let quiz;
+    try {
+        const response = await fetch(`${API_URL}/quiz`, {
+            headers: { 'Authorization': `Bearer ${getToken()}` }
+        });
+        const data = await response.json();
+        quiz = (data.quizzes || []).find(q => q.id === quizId);
+    } catch (err) {
+        showNotification('Fehler beim Laden des Quiz', 'error');
+        hideLoading();
+        return;
+    }
+
+    hideLoading();
+
+    if (!quiz) {
+        showNotification('Quiz nicht gefunden', 'error');
+        return;
+    }
+
+    // 2. Modal öffnen (HTML — identisch mit showAddQuizModal, aber Titel anders)
+    if (document.getElementById('add-quiz-modal')) return;
+
+    const modalHTML = `
+        <div id="add-quiz-modal" class="modal">
+            <div class="modal-content" style="max-width: 600px; max-height: 90vh; overflow-y: auto;">
+                <h2>✏️ Quiz bearbeiten</h2>
+                <form id="add-quiz-form">
+                    <div class="form-group">
+                        <label>Titel *</label>
+                        <input type="text" id="quiz-title" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Beschreibung *</label>
+                        <textarea id="quiz-description" rows="3" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Kategorie *</label>
+                        <select id="quiz-category" required>
+                            <option value="">Bitte wählen...</option>
+                            <option value="enkeltrick">Enkeltrick</option>
+                            <option value="polizei">Falsche Polizisten</option>
+                            <option value="bank">Bank-Betrug</option>
+                            <option value="techsupport">Tech-Support</option>
+                            <option value="gewinnspiel">Gewinnspiel</option>
+                            <option value="allgemein">Allgemein</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="quiz-published">
+                            Veröffentlicht
+                        </label>
+                    </div>
+
+                    <h3>Fragen</h3>
+                    <div id="questions-container"></div>
+                    <button type="button" class="btn btn-secondary" onclick="addQuestionField()" style="margin: 10px 0;">+ Frage hinzufügen</button>
+
+                    <div style="display: flex; gap: 10px; margin-top: 20px;">
+                        <button type="submit" class="btn btn-primary" style="flex: 1;">💾 Änderungen speichern</button>
+                        <button type="button" class="btn btn-secondary" onclick="closeAddQuizModal()" style="flex: 1;">Abbrechen</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    `;
+
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+
+    // 3. Felder mit bestehenden Daten befüllen
+    document.getElementById('quiz-title').value       = quiz.title       || '';
+    document.getElementById('quiz-description').value = quiz.description || '';
+    document.getElementById('quiz-category').value    = quiz.category    || '';
+    document.getElementById('quiz-published').checked = quiz.published   || false;
+
+    // 4. Bestehende Fragen ins Modal laden
+    questionCounter = 0; // Counter zurücksetzen
+
+    const questions = quiz.questions || [];
+
+    if (questions.length === 0) {
+        // Mindestens ein leeres Fragefeld anzeigen
+        addQuestionField();
+    } else {
+        questions.forEach((q, index) => {
+            questionCounter++;
+            const container = document.getElementById('questions-container');
+
+            // Optionen aus JSONB-Array (Supabase gibt Array zurück)
+            const opts = Array.isArray(q.options) ? q.options : ['', '', '', ''];
+
+            const questionHTML = `
+                <div class="question-block" id="question-${questionCounter}"
+                    style="background: #f5f5f5; padding: 15px; margin-bottom: 15px; border-radius: 8px;">
+                    <h4>Frage ${questionCounter}</h4>
+                    <div class="form-group">
+                        <label>Frage *</label>
+                        <input type="text" class="question-text" value="${escapeHtml(q.question || '')}" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Antwort 1 *</label>
+                        <input type="text" class="option-1" value="${escapeHtml(opts[0] || '')}" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Antwort 2 *</label>
+                        <input type="text" class="option-2" value="${escapeHtml(opts[1] || '')}" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Antwort 3 *</label>
+                        <input type="text" class="option-3" value="${escapeHtml(opts[2] || '')}" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Antwort 4 *</label>
+                        <input type="text" class="option-4" value="${escapeHtml(opts[3] || '')}" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Richtige Antwort *</label>
+                        <select class="correct-answer" required>
+                            <option value="0" ${q.correct_answer === 0 ? 'selected' : ''}>Antwort 1</option>
+                            <option value="1" ${q.correct_answer === 1 ? 'selected' : ''}>Antwort 2</option>
+                            <option value="2" ${q.correct_answer === 2 ? 'selected' : ''}>Antwort 3</option>
+                            <option value="3" ${q.correct_answer === 3 ? 'selected' : ''}>Antwort 4</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Erklärung (optional)</label>
+                        <textarea class="explanation" rows="2">${escapeHtml(q.explanation || '')}</textarea>
+                    </div>
+                    <button type="button" class="btn btn-danger"
+                        onclick="removeQuestion(${questionCounter})"
+                        style="background: #d32f2f;">Frage entfernen</button>
+                </div>
+            `;
+
+            container.insertAdjacentHTML('beforeend', questionHTML);
+        });
+    }
+
+    // 5. Submit → PUT statt POST
+    document.getElementById('add-quiz-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        await handleUpdateQuiz(quizId);
+    });
+}
+
+// ===================================
+// handleUpdateQuiz — PUT /api/quiz/:id
+// ===================================
+async function handleUpdateQuiz(quizId) {
+    const title       = document.getElementById('quiz-title').value.trim();
+    const description = document.getElementById('quiz-description').value.trim();
+    const category    = document.getElementById('quiz-category').value;
+    const published   = document.getElementById('quiz-published').checked;
+
+    // Fragen einsammeln (identisch mit handleCreateQuiz)
+    const questions = [];
+    document.querySelectorAll('.question-block').forEach(block => {
+        questions.push({
+            question:       block.querySelector('.question-text').value.trim(),
+            options: [
+                block.querySelector('.option-1').value.trim(),
+                block.querySelector('.option-2').value.trim(),
+                block.querySelector('.option-3').value.trim(),
+                block.querySelector('.option-4').value.trim()
+            ],
+            correct_answer: parseInt(block.querySelector('.correct-answer').value),
+            explanation:    block.querySelector('.explanation').value.trim()
+        });
+    });
+
+    if (!title || !description || !category || questions.length === 0) {
+        showNotification('Bitte alle Pflichtfelder ausfüllen und mindestens eine Frage hinzufügen', 'error');
+        return;
+    }
+
+    showLoading();
+
+    try {
+        const response = await fetch(`${API_URL}/quiz/${quizId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${getToken()}`
+            },
+            body: JSON.stringify({ title, description, category, published, questions })
+        });
+
+        if (response.ok) {
+            showNotification('Quiz erfolgreich aktualisiert!', 'success');
+            closeAddQuizModal();
+            await loadAdminQuizzes(); // Liste sofort neu laden
+        } else {
+            const data = await response.json();
+            showNotification(data.error || 'Fehler beim Speichern', 'error');
+        }
+    } catch (error) {
+        console.error('Update quiz error:', error);
+        showNotification('Fehler beim Speichern', 'error');
+    } finally {
+        hideLoading();
+    }
+}
+
+// ===================================
+// Hilfsfunktion — XSS-Schutz
+// ===================================
+function escapeHtml(str) {
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+}
+
+// ===================================
+// window-Export — Zeile 559 ERSETZEN durch:
+//   window.editQuiz = editQuiz;
+// ===================================
 
 window.closeAddNumberModal = closeAddNumberModal;
 window.deleteNumber = deleteNumber;
@@ -556,7 +797,7 @@ window.addQuestionField = addQuestionField;
 window.removeQuestion = removeQuestion;
 window.closeAddQuizModal = closeAddQuizModal;
 window.deleteQuiz = deleteQuiz;
-window.editQuiz = (id) => alert('Edit Quiz feature coming soon!');
+window.editQuiz = editQuiz;
 window.loadAdminQuizzes = loadAdminQuizzes;
 window.loadAdminTrainings = loadAdminTrainings;
 window.deleteTraining = deleteTraining;

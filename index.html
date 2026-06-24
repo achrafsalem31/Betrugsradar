@@ -34,9 +34,18 @@
     <nav class="main-nav">
         <div class="nav-container">
             <div class="nav-logo">
-                <span class="logo-icon">🛡️</span>
-                <span class="logo-text">CallSafe</span>
-            </div>
+    <img
+        src="images/callsafe-logo.png"
+        alt="CallSafe Logo"
+        class="logo-img"
+        width="52"
+        height="52"
+    >
+    <div class="logo-text-wrap">
+        <span class="logo-text">CallSafe</span>
+        <span class="logo-slogan">Ein Klick. Voller Schutz.</span>
+    </div>
+</div>
             <div class="nav-links">
                 <button class="nav-btn active" data-page="check">
                     <span class="nav-icon">🔍</span>
@@ -384,9 +393,15 @@ document.addEventListener('DOMContentLoaded', () => {
             <!-- Spalte 1: Logo -->
             <div class="cs-footer__logo-wrap">
                 <div class="cs-footer__logo-placeholder">
-                    <div class="cs-footer__logo-icon" aria-hidden="true">🛡️</div>
-                    <span class="cs-footer__logo-text">CallSafe</span>
-                </div>
+    <img
+        src="images/callsafe-logo.png"
+        alt="CallSafe Logo"
+        class="cs-footer__logo-img"
+        width="44"
+        height="44"
+    >
+    <span class="cs-footer__logo-text">CallSafe</span>
+</div>
                 <p class="cs-footer__tagline">
                     Ihr vertrauensvoller Schutz gegen Telefonbetrug — für Sie und Ihre Familie.
                 </p>
@@ -396,10 +411,10 @@ document.addEventListener('DOMContentLoaded', () => {
             <nav aria-label="Footer-Navigation">
                 <h3 class="cs-footer__col-title">Informationen</h3>
                 <ul class="cs-footer__links">
-                    <li><a href="#" aria-label="Datenschutzerklärung">🔒 Datenschutz</a></li>
-                    <li><a href="#" aria-label="Über uns">👥 Über uns</a></li>
-                    <li><a href="#" id="pwa-footer-link">📲 Download als PWA</a></li>
-                    <li><a href="#" aria-label="Kontaktdaten">✉️ Kontakt</a></li>
+                    <li><a href="datenschutz.html">🔒 Datenschutz</a></li>
+                    <li><a href="ueber-uns.html">👥 Über uns</a></li>
+                    <li><a href="pwa-download.html" id="pwa-footer-link">📲 Download als PWA</a></li>
+                    <li><a href="kontakt.html">✉️ Kontakt</a></li>
                 </ul>
             </nav>
 
@@ -557,201 +572,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-<!-- Datenschutz -->
-<div class="cs-info-overlay" id="csModalDatenschutz" role="dialog" aria-modal="true" aria-labelledby="csTitleDatenschutz">
-  <div class="cs-info-modal">
-    <div class="cs-info-modal__header">
-      <h2 id="csTitleDatenschutz">🔒 Datenschutzerklärung</h2>
-      <button class="cs-info-modal__close" onclick="csCloseModal('csModalDatenschutz')" aria-label="Schließen">✕</button>
-    </div>
-    <div class="cs-info-modal__body">
-      <p class="cs-info-stand">Stand: 13.05.2026</p>
-
-      <h3>A. Allgemeine Hinweise</h3>
-      <p>Der Schutz personenbezogener Daten ist uns wichtig. Diese Datenschutzerklärung informiert darüber, welche personenbezogenen Daten bei der Nutzung der Webanwendung CallSafe verarbeitet werden, zu welchen Zwecken dies erfolgt und welche Rechte Nutzerinnen und Nutzer haben.</p>
-      <p>CallSafe ist eine Webanwendung zur Unterstützung der Betrugsprävention. Die Verarbeitung personenbezogener Daten erfolgt unter Beachtung der Datenschutz-Grundverordnung (DSGVO) sowie der in Deutschland geltenden Datenschutzvorschriften.</p>
-
-      <h3>B. Verantwortliche Stelle</h3>
-      <p>Verantwortlich für die Datenverarbeitung ist: <strong>Projektteam CallSafe</strong><br>
-      Universität Hildesheim, Fachbereich 4 – Wirtschaftsinformatik<br>
-      E-Mail: <a href="mailto:CallSafe@test.de">CallSafe@test.de</a></p>
-
-      <h3>C. Welche Daten werden verarbeitet?</h3>
-      <p>Bei der Nutzung von CallSafe können folgende Daten verarbeitet werden:</p>
-      <ul>
-        <li>Eingegebene oder gemeldete Telefonnummern</li>
-        <li>Kategorie der Meldung (z. B. Enkeltrick, falsche Polizei, Bankbetrug)</li>
-        <li>Freiwillige Beschreibung des Vorfalls</li>
-        <li>Technische Daten wie Zeitpunkt einer Anfrage</li>
-        <li>Login-Daten für geschützte Verwaltungsbereiche</li>
-        <li>E-Mail-Adresse und Passwort bei Benutzerkonten</li>
-      </ul>
-      <p>Die Beschreibung eines Betrugsfalls ist freiwillig. Bitte tragen Sie dort keine sensiblen persönlichen Informationen ein.</p>
-
-      <h3>D. Zweck der Datenverarbeitung</h3>
-      <p>Die Daten werden verarbeitet, um:</p>
-      <ul>
-        <li>Verdächtige Telefonnummern zu erkennen und zu warnen</li>
-        <li>Gemeldete Telefonnummern in einer Datenbank zu verwalten</li>
-        <li>Statistiken über gemeldete Betrugsarten zu erstellen</li>
-        <li>Den Administrationsbereich zu schützen</li>
-        <li>Die Funktionalität und Sicherheit der Webanwendung sicherzustellen</li>
-      </ul>
-
-      <h3>E. Rechtsgrundlage</h3>
-      <p>Die Verarbeitung erfolgt auf Grundlage von Art. 6 Abs. 1 DSGVO, insbesondere:</p>
-      <ul>
-        <li><strong>Art. 6 Abs. 1 lit. f DSGVO</strong> – berechtigtes Interesse (Betrugsprävention)</li>
-        <li><strong>Art. 6 Abs. 1 lit. a DSGVO</strong> – Einwilligung (freiwillige Angaben)</li>
-        <li><strong>Art. 6 Abs. 1 lit. b DSGVO</strong> – Vertrag (bei Benutzerkonten)</li>
-      </ul>
-
-      <h3>F. Speicherung und Datenbank</h3>
-      <p>Die Daten werden in einer Datenbank gespeichert (Supabase). Passwörter werden nicht im Klartext gespeichert. Die Speicherung erfolgt nur so lange wie nötig (Art. 5 Abs. 1 lit. e DSGVO).</p>
-
-      <h3>G. Cookies und LocalStorage</h3>
-      <p>CallSafe verwendet keine Werbe-Cookies und kein Tracking (z. B. kein Google Analytics). Technisch notwendige Speicherungen (Login-Status, Sicherheitstoken) erfolgen über LocalStorage. Dafür ist nach § 25 TDDDG keine gesonderte Einwilligung erforderlich.</p>
-
-      <h3>H. Datensicherheit</h3>
-      <p>Zum Schutz der Daten werden eingesetzt: geschützte API-Endpunkte, sichere Passwort-Speicherung, Authentifizierung über Sicherheitstokens, Rate-Limiting und Zugriffsbeschränkungen (Art. 32 DSGVO).</p>
-
-      <h3>I. Ihre Rechte</h3>
-      <p>Sie haben nach der DSGVO das Recht auf: Auskunft (Art. 15), Berichtigung (Art. 16), Löschung (Art. 17), Einschränkung (Art. 18), Datenübertragbarkeit (Art. 20), Widerspruch (Art. 21) und Beschwerde bei einer Aufsichtsbehörde (Art. 77).</p>
-      <p>Anfragen richten Sie bitte an: <a href="mailto:CallSafe@test.de">CallSafe@test.de</a></p>
-
-      <h3>J. Hinweis zum Studienprojekt</h3>
-      <p>CallSafe wurde im Rahmen eines Studienprojekts an der Universität Hildesheim entwickelt. Diese Datenschutzerklärung ersetzt keine verbindliche rechtliche Beratung, sondern dient der transparenten Darstellung unseres Datenschutzkonzepts.</p>
-    </div>
-  </div>
-</div>
-
-<!-- Über uns -->
-<div class="cs-info-overlay" id="csModalUeberUns" role="dialog" aria-modal="true" aria-labelledby="csTitleUeberUns">
-  <div class="cs-info-modal">
-    <div class="cs-info-modal__header">
-      <h2 id="csTitleUeberUns">👥 Über uns</h2>
-      <button class="cs-info-modal__close" onclick="csCloseModal('csModalUeberUns')" aria-label="Schließen">✕</button>
-    </div>
-    <div class="cs-info-modal__body">
-
-      <div class="cs-info-hero-banner">
-        <span>🛡️</span>
-        <p>Unser Engagement für eine sicherere und stärker vernetzte digitale Welt</p>
-      </div>
-
-      <h3>Willkommen bei CallSafe</h3>
-      <p>CallSafe ist Ihre vertrauenswürdige Plattform zum Schutz vor Telefonbetrug und betrügerischen Anrufen. Als IT-Studienprojekt an der Universität Hildesheim von <strong>Achraf Saad</strong> und <strong>Ilyas</strong> ins Leben gerufen, liegt unser Fokus darauf, eine barrierefreie und verständliche Lösung für diejenigen anzubieten, die oft besonders im Visier von Betrügern stehen.</p>
-
-      <h3>🎯 Unsere Mission: Schutz für Senioren</h3>
-      <p>In einer Welt, in der betrügerische Anrufe immer raffinierter werden, ist es unsere Mission, ältere Menschen und ihre Angehörigen zu unterstützen. Wir möchten ein digitales Umfeld schaffen, das durch Vertrauen und Sicherheit geprägt ist.</p>
-
-      <h3>Unsere Grundpfeiler</h3>
-      <div class="cs-info-cards">
-        <div class="cs-info-card">
-          <span>♿</span>
-          <div>
-            <strong>Barrierefreiheit</strong>
-            <p>Die Benutzeroberfläche ist bewusst schlicht und intuitiv gestaltet, damit sie ohne technische Hürden genutzt werden kann.</p>
-          </div>
-        </div>
-        <div class="cs-info-card">
-          <span>🤝</span>
-          <div>
-            <strong>Schutz der Gemeinschaft</strong>
-            <p>Wir sehen es als unsere soziale Verantwortung, die schwächsten Mitglieder unserer digitalen Gemeinschaft vor Ausbeutung zu schützen.</p>
-          </div>
-        </div>
-        <div class="cs-info-card">
-          <span>🎓</span>
-          <div>
-            <strong>Akademische Integrität</strong>
-            <p>Als Projekt der Universität Hildesheim stützen wir uns auf fundierte Analysen aktueller Betrugsmethoden.</p>
-          </div>
-        </div>
-      </div>
-
-      <h3>👨‍💻 Das Team</h3>
-      <p><strong>Achraf Saad</strong> und <strong>Ilyas</strong> sind die Entwickler von CallSafe. Als Studenten der IT an der Universität Hildesheim haben wir erkannt, dass technischer Fortschritt oft die Bedürfnisse älterer Generationen übersieht. Mit CallSafe wollen wir diese Lücke schließen.</p>
-
-      <div class="cs-info-promise">
-        <h3>💚 Unser Versprechen</h3>
-        <p>Wir arbeiten kontinuierlich daran, CallSafe zu verbessern und an neue Herausforderungen anzupassen. Unser Ziel ist es, dass Senioren wieder ohne Sorge ihr Telefon nutzen können — in dem Wissen, dass sie durch CallSafe geschützt sind.</p>
-        <p><em>Vielen Dank, dass Sie CallSafe vertrauen. Gemeinsam machen wir die digitale Welt für alle Generationen sicherer.</em></p>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Kontakt & Impressum -->
-<div class="cs-info-overlay" id="csModalKontakt" role="dialog" aria-modal="true" aria-labelledby="csTitleKontakt">
-  <div class="cs-info-modal">
-    <div class="cs-info-modal__header">
-      <h2 id="csTitleKontakt">✉️ Kontakt & Impressum</h2>
-      <button class="cs-info-modal__close" onclick="csCloseModal('csModalKontakt')" aria-label="Schließen">✕</button>
-    </div>
-    <div class="cs-info-modal__body">
-
-      <h3>Kontakt</h3>
-      <div class="cs-info-kontakt-grid">
-        <div class="cs-info-kontakt-item">
-          <span>📬</span>
-          <div>
-            <strong>Anfragen & Löschungen</strong>
-            <p>Über das <a href="#" onclick="csCloseModal('csModalKontakt'); document.getElementById('contactFloatBtn').click(); return false;">Kontaktformular</a></p>
-          </div>
-        </div>
-        <div class="cs-info-kontakt-item">
-          <span>📧</span>
-          <div>
-            <strong>E-Mail</strong>
-            <p><a href="mailto:CallSafe@test.de">CallSafe@test.de</a></p>
-          </div>
-        </div>
-        <div class="cs-info-kontakt-item">
-          <span>📞</span>
-          <div>
-            <strong>Telefon</strong>
-            <p>05121 883-0<br><small>Montag–Freitag 9–17 Uhr</small></p>
-          </div>
-        </div>
-        <div class="cs-info-kontakt-item">
-          <span>📠</span>
-          <div>
-            <strong>Telefax</strong>
-            <p>05121 883-9999</p>
-          </div>
-        </div>
-      </div>
-
-      <hr class="cs-info-divider">
-
-      <h3>Impressum (Anbieterkennzeichnung)</h3>
-      <div class="cs-info-impressum">
-        <p><strong>🏢 Adresse</strong><br>
-        Universitätsplatz 1<br>
-        31141 Hildesheim, Deutschland</p>
-
-        <p><strong>USt-IdNr.:</strong> DE -------</p>
-
-        <p><strong>Geschäftsführer:</strong> Achraf Saad & Ilyas<br>
-        Universität Hildesheim, Fachbereich 4 – Wirtschaftsinformatik</p>
-
-        <p><strong>Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV:</strong><br>
-        Projektteam CallSafe<br>
-        E-Mail: <a href="mailto:CallSafe@test.de">CallSafe@test.de</a></p>
-      </div>
-
-      <div class="cs-info-hinweis">
-        <span>🎓</span>
-        <p>CallSafe ist ein Studienprojekt der Universität Hildesheim und dient ausschließlich nicht-kommerziellen, akademischen Zwecken.</p>
-      </div>
-
-    </div>
-  </div>
-</div>
-
 </body>
 </html>
 
-
-dd

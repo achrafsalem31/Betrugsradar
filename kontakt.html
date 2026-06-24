@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Kontakt & Impressum – CallSafe">
+    <meta name="theme-color" content="#2d5a3d">
+    <title>Kontakt & Impressum – CallSafe</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+    <style>
+        .sub-nav {
+            background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            position: sticky; top: 0; z-index: 100; padding: 0 1.5rem;
+        }
+        .sub-nav__inner {
+            max-width: 900px; margin: 0 auto; display: flex;
+            align-items: center; justify-content: space-between; height: 72px; gap: 1rem;
+        }
+        .sub-nav__logo {
+            display: flex; align-items: center; gap: 10px; text-decoration: none;
+            color: #2d5a3d; font-size: 1.5rem; font-weight: 800;
+        }
+        .sub-nav__logo span:first-child { font-size: 2rem; }
+        .sub-nav__back {
+            display: inline-flex; align-items: center; gap: 8px; background: #2d5a3d;
+            color: #ffffff; text-decoration: none; padding: 0.7rem 1.4rem;
+            border-radius: 50px; font-size: 1.05rem; font-weight: 600; transition: background 0.2s;
+        }
+        .sub-nav__back:hover { background: #1f4029; }
+
+        .sub-page { max-width: 900px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+        .sub-page__hero {
+            background: linear-gradient(135deg, #2d5a3d 0%, #4a8059 100%);
+            color: #fff; border-radius: 16px; padding: 2.5rem 2rem;
+            margin-bottom: 3rem; text-align: center;
+        }
+        .sub-page__hero-icon { font-size: 3.5rem; margin-bottom: 0.75rem; display: block; }
+        .sub-page__hero h1 { font-size: 2.2rem; font-weight: 800; margin-bottom: 0.5rem; }
+        .sub-page__hero p { font-size: 1.1rem; opacity: 0.9; }
+
+        .sub-page__content h2 {
+            font-size: 1.5rem; font-weight: 700; color: #2d5a3d;
+            margin: 2.5rem 0 0.75rem; padding-bottom: 0.4rem;
+            border-bottom: 2px solid #e5e7eb;
+        }
+        .sub-page__content p { font-size: 1.1rem; line-height: 1.9; color: #374151; margin-bottom: 0.75rem; }
+        .sub-page__content a { color: #2d5a3d; font-weight: 600; }
+        .sub-page__content a:hover { text-decoration: underline; }
+
+        /* Kontakt-Karten */
+        .kontakt-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.25rem; margin: 1.5rem 0;
+        }
+        .kontakt-card {
+            background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 12px;
+            padding: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;
+        }
+        .kontakt-card__icon { font-size: 2rem; flex-shrink: 0; }
+        .kontakt-card__title { font-weight: 700; font-size: 1rem; color: #2d5a3d; margin-bottom: 4px; }
+        .kontakt-card__text { font-size: 1rem; color: #374151; line-height: 1.6; }
+
+        /* Impressum Box */
+        .impressum-box {
+            background: #f9fafb; border: 2px solid #e5e7eb;
+            border-radius: 12px; padding: 1.75rem; margin-top: 1rem;
+        }
+        .impressum-box p { font-size: 1.05rem; line-height: 1.8; color: #374151; margin-bottom: 0.75rem; }
+
+        /* Hinweis-Box */
+        .hinweis-box {
+            display: flex; gap: 1rem; align-items: flex-start;
+            background: #fffbeb; border: 2px solid #fcd34d;
+            border-radius: 12px; padding: 1.5rem; margin-top: 2rem;
+        }
+        .hinweis-box__icon { font-size: 1.8rem; flex-shrink: 0; }
+        .hinweis-box p { font-size: 1rem; line-height: 1.7; color: #374151; margin: 0; }
+
+        hr.divider { border: none; border-top: 2px solid #e5e7eb; margin: 2rem 0; }
+
+        .sub-page__back-bottom {
+            margin-top: 3.5rem; padding-top: 2rem;
+            border-top: 2px solid #e5e7eb; text-align: center;
+        }
+        .sub-page__back-bottom a {
+            display: inline-flex; align-items: center; gap: 8px; background: #2d5a3d;
+            color: #fff; text-decoration: none; padding: 1rem 2.5rem;
+            border-radius: 50px; font-size: 1.15rem; font-weight: 700; transition: background 0.2s;
+        }
+        .sub-page__back-bottom a:hover { background: #1f4029; }
+
+        .sub-footer {
+            background: #1a2e23; color: rgba(255,255,255,0.5);
+            text-align: center; padding: 1.5rem; font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="sub-nav" role="navigation" aria-label="Seitennavigation">
+    <div class="sub-nav__inner">
+        <a href="index.html" class="sub-nav__logo" aria-label="CallSafe Startseite">
+            <span>🛡️</span><span>CallSafe</span>
+        </a>
+        <a href="index.html" class="sub-nav__back">← Zurück zur Startseite</a>
+    </div>
+</nav>
+
+<main class="sub-page" id="main-content">
+
+    <div class="sub-page__hero">
+        <span class="sub-page__hero-icon" aria-hidden="true">✉️</span>
+        <h1>Kontakt & Impressum</h1>
+        <p>So erreichen Sie uns</p>
+    </div>
+
+    <div class="sub-page__content">
+
+        <h2>Kontakt</h2>
+        <div class="kontakt-grid">
+            <div class="kontakt-card">
+                <span class="kontakt-card__icon" aria-hidden="true">📧</span>
+                <div>
+                    <div class="kontakt-card__title">E-Mail</div>
+                    <div class="kontakt-card__text"><a href="mailto:CallSafe@test.de">CallSafe@test.de</a></div>
+                </div>
+            </div>
+            <div class="kontakt-card">
+                <span class="kontakt-card__icon" aria-hidden="true">📞</span>
+                <div>
+                    <div class="kontakt-card__title">Telefon</div>
+                    <div class="kontakt-card__text">05121 883-0<br><small>Montag–Freitag 9–17 Uhr</small></div>
+                </div>
+            </div>
+            <div class="kontakt-card">
+                <span class="kontakt-card__icon" aria-hidden="true">📠</span>
+                <div>
+                    <div class="kontakt-card__title">Telefax</div>
+                    <div class="kontakt-card__text">05121 883-9999</div>
+                </div>
+            </div>
+            <div class="kontakt-card">
+                <span class="kontakt-card__icon" aria-hidden="true">📬</span>
+                <div>
+                    <div class="kontakt-card__title">Anfragen & Löschungen</div>
+                    <div class="kontakt-card__text"><a href="index.html#kontaktformular">Über das Kontaktformular auf der Startseite</a></div>
+                </div>
+            </div>
+        </div>
+
+        <hr class="divider">
+
+        <h2>Impressum (Anbieterkennzeichnung)</h2>
+        <div class="impressum-box">
+            <p><strong>🏢 Adresse</strong><br>
+            Universitätsplatz 1<br>
+            31141 Hildesheim, Deutschland</p>
+
+            <p><strong>USt-IdNr.:</strong> DE -------</p>
+
+            <p><strong>Geschäftsführer:</strong> Achraf Saad & Ilyas<br>
+            Universität Hildesheim, Fachbereich 4 – Wirtschaftsinformatik</p>
+
+            <p><strong>Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV:</strong><br>
+            Projektteam CallSafe<br>
+            E-Mail: <a href="mailto:CallSafe@test.de">CallSafe@test.de</a></p>
+        </div>
+
+        <div class="hinweis-box">
+            <span class="hinweis-box__icon" aria-hidden="true">🎓</span>
+            <p>CallSafe ist ein Studienprojekt der Universität Hildesheim und dient ausschließlich nicht-kommerziellen, akademischen Zwecken.</p>
+        </div>
+
+        <div class="sub-page__back-bottom">
+            <a href="index.html">🏠 Zurück zur Startseite</a>
+        </div>
+    </div>
+</main>
+
+<footer class="sub-footer">
+    <p>&copy; <script>document.write(new Date().getFullYear())</script> CallSafe – Universität Hildesheim. Alle Rechte vorbehalten.</p>
+</footer>
+
+</body>
+</html>

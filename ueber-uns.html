@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Über uns – CallSafe">
+    <meta name="theme-color" content="#2d5a3d">
+    <title>Über uns – CallSafe</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+    <style>
+        .sub-nav {
+            background: #ffffff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            position: sticky; top: 0; z-index: 100;
+            padding: 0 1.5rem;
+        }
+        .sub-nav__inner {
+            max-width: 900px; margin: 0 auto;
+            display: flex; align-items: center;
+            justify-content: space-between; height: 72px; gap: 1rem;
+        }
+        .sub-nav__logo {
+            display: flex; align-items: center; gap: 10px;
+            text-decoration: none; color: #2d5a3d;
+            font-size: 1.5rem; font-weight: 800;
+        }
+        .sub-nav__logo span:first-child { font-size: 2rem; }
+        .sub-nav__back {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: #2d5a3d; color: #ffffff; text-decoration: none;
+            padding: 0.7rem 1.4rem; border-radius: 50px;
+            font-size: 1.05rem; font-weight: 600; transition: background 0.2s;
+        }
+        .sub-nav__back:hover { background: #1f4029; }
+
+        .sub-page { max-width: 900px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+        .sub-page__hero {
+            background: linear-gradient(135deg, #2d5a3d 0%, #4a8059 100%);
+            color: #fff; border-radius: 16px; padding: 2.5rem 2rem;
+            margin-bottom: 3rem; text-align: center;
+        }
+        .sub-page__hero-icon { font-size: 3.5rem; margin-bottom: 0.75rem; display: block; }
+        .sub-page__hero h1 { font-size: 2.2rem; font-weight: 800; margin-bottom: 0.5rem; }
+        .sub-page__hero p { font-size: 1.1rem; opacity: 0.9; }
+
+        .sub-page__content h2 {
+            font-size: 1.5rem; font-weight: 700; color: #2d5a3d;
+            margin: 2.5rem 0 0.75rem; padding-bottom: 0.4rem;
+            border-bottom: 2px solid #e5e7eb;
+        }
+        .sub-page__content p {
+            font-size: 1.1rem; line-height: 1.9; color: #374151; margin-bottom: 0.75rem;
+        }
+
+        /* Karten-Grid */
+        .about-cards {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.25rem; margin: 1.5rem 0;
+        }
+        .about-card {
+            background: #f0fdf4; border: 1px solid #bbf7d0;
+            border-radius: 12px; padding: 1.5rem;
+            display: flex; flex-direction: column; gap: 0.5rem;
+        }
+        .about-card__icon { font-size: 2.2rem; }
+        .about-card__title { font-size: 1.1rem; font-weight: 700; color: #2d5a3d; }
+        .about-card__text { font-size: 1rem; line-height: 1.7; color: #374151; }
+
+        /* Team-Karten */
+        .team-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.25rem; margin: 1.5rem 0;
+        }
+        .team-card {
+            background: #ffffff; border: 2px solid #e5e7eb;
+            border-radius: 12px; padding: 1.5rem; text-align: center;
+        }
+        .team-card__avatar {
+            width: 72px; height: 72px; border-radius: 50%;
+            background: #2d5a3d; color: #fff;
+            font-size: 2rem; display: flex; align-items: center;
+            justify-content: center; margin: 0 auto 0.75rem;
+        }
+        .team-card__name { font-size: 1.15rem; font-weight: 700; color: #1f2937; }
+        .team-card__role { font-size: 0.95rem; color: #6b7280; margin-top: 4px; }
+
+        /* Promise-Box */
+        .promise-box {
+            background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+            border: 2px solid #86efac; border-radius: 16px;
+            padding: 2rem; margin-top: 2rem; text-align: center;
+        }
+        .promise-box p { font-size: 1.1rem; line-height: 1.9; color: #374151; margin-bottom: 0.5rem; }
+
+        .sub-page__back-bottom {
+            margin-top: 3.5rem; padding-top: 2rem;
+            border-top: 2px solid #e5e7eb; text-align: center;
+        }
+        .sub-page__back-bottom a {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: #2d5a3d; color: #fff; text-decoration: none;
+            padding: 1rem 2.5rem; border-radius: 50px;
+            font-size: 1.15rem; font-weight: 700; transition: background 0.2s;
+        }
+        .sub-page__back-bottom a:hover { background: #1f4029; }
+
+        .sub-footer {
+            background: #1a2e23; color: rgba(255,255,255,0.5);
+            text-align: center; padding: 1.5rem; font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="sub-nav" role="navigation" aria-label="Seitennavigation">
+    <div class="sub-nav__inner">
+        <a href="index.html" class="sub-nav__logo" aria-label="CallSafe Startseite">
+            <span>🛡️</span><span>CallSafe</span>
+        </a>
+        <a href="index.html" class="sub-nav__back">← Zurück zur Startseite</a>
+    </div>
+</nav>
+
+<main class="sub-page" id="main-content">
+
+    <div class="sub-page__hero">
+        <span class="sub-page__hero-icon" aria-hidden="true">👥</span>
+        <h1>Über uns</h1>
+        <p>Unser Engagement für eine sicherere digitale Welt</p>
+    </div>
+
+    <div class="sub-page__content">
+
+        <h2>Willkommen bei CallSafe</h2>
+        <p>CallSafe ist Ihre vertrauenswürdige Plattform zum Schutz vor Telefonbetrug und betrügerischen Anrufen. Als IT-Studienprojekt an der Universität Hildesheim von <strong>Achraf Saad</strong> und <strong>Ilyas</strong> ins Leben gerufen, liegt unser Fokus darauf, eine barrierefreie und verständliche Lösung für diejenigen anzubieten, die oft besonders im Visier von Betrügern stehen.</p>
+
+        <h2>🎯 Unsere Mission: Schutz für Senioren</h2>
+        <p>In einer Welt, in der betrügerische Anrufe immer raffinierter werden, ist es unsere Mission, ältere Menschen und ihre Angehörigen zu unterstützen. Wir möchten ein digitales Umfeld schaffen, das durch Vertrauen und Sicherheit geprägt ist.</p>
+
+        <h2>Unsere Grundpfeiler</h2>
+        <div class="about-cards">
+            <div class="about-card">
+                <span class="about-card__icon" aria-hidden="true">♿</span>
+                <div class="about-card__title">Barrierefreiheit</div>
+                <p class="about-card__text">Die Benutzeroberfläche ist bewusst schlicht und intuitiv gestaltet, damit sie ohne technische Hürden genutzt werden kann.</p>
+            </div>
+            <div class="about-card">
+                <span class="about-card__icon" aria-hidden="true">🤝</span>
+                <div class="about-card__title">Schutz der Gemeinschaft</div>
+                <p class="about-card__text">Wir sehen es als unsere soziale Verantwortung, die schwächsten Mitglieder unserer digitalen Gemeinschaft vor Ausbeutung zu schützen.</p>
+            </div>
+            <div class="about-card">
+                <span class="about-card__icon" aria-hidden="true">🎓</span>
+                <div class="about-card__title">Akademische Integrität</div>
+                <p class="about-card__text">Als Projekt der Universität Hildesheim stützen wir uns auf fundierte Analysen aktueller Betrugsmethoden.</p>
+            </div>
+        </div>
+
+        <h2>👨‍💻 Das Team</h2>
+        <div class="team-grid">
+            <div class="team-card">
+                <div class="team-card__avatar" aria-hidden="true">A</div>
+                <div class="team-card__name">Achraf Saad</div>
+                <div class="team-card__role">Entwickler & Projektleiter</div>
+            </div>
+            <div class="team-card">
+                <div class="team-card__avatar" aria-hidden="true">I</div>
+                <div class="team-card__name">Ilyas</div>
+                <div class="team-card__role">Entwickler & Design</div>
+            </div>
+        </div>
+        <p>Als Studenten der IT an der Universität Hildesheim haben wir erkannt, dass technischer Fortschritt oft die Bedürfnisse älterer Generationen übersieht. Mit CallSafe wollen wir diese Lücke schließen.</p>
+
+        <div class="promise-box">
+            <h2 style="border:none; margin-top:0;">💚 Unser Versprechen</h2>
+            <p>Wir arbeiten kontinuierlich daran, CallSafe zu verbessern und an neue Herausforderungen anzupassen. Unser Ziel ist es, dass Senioren wieder ohne Sorge ihr Telefon nutzen können — in dem Wissen, dass sie durch CallSafe geschützt sind.</p>
+            <p><em>Vielen Dank, dass Sie CallSafe vertrauen. Gemeinsam machen wir die digitale Welt für alle Generationen sicherer.</em></p>
+        </div>
+
+        <div class="sub-page__back-bottom">
+            <a href="index.html">🏠 Zurück zur Startseite</a>
+        </div>
+    </div>
+</main>
+
+<footer class="sub-footer">
+    <p>&copy; <script>document.write(new Date().getFullYear())</script> CallSafe – Universität Hildesheim. Alle Rechte vorbehalten.</p>
+</footer>
+
+</body>
+</html>

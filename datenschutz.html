@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Datenschutzerklärung – CallSafe">
+    <meta name="theme-color" content="#2d5a3d">
+    <title>Datenschutz – CallSafe</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+    <style>
+        /* ============================
+           UNTERSEITE: gemeinsames CSS
+           ============================ */
+        .sub-nav {
+            background: #ffffff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 0 1.5rem;
+        }
+        .sub-nav__inner {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 72px;
+            gap: 1rem;
+        }
+        .sub-nav__logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: #2d5a3d;
+            font-size: 1.5rem;
+            font-weight: 800;
+        }
+        .sub-nav__logo span:first-child { font-size: 2rem; }
+        .sub-nav__back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #2d5a3d;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 0.7rem 1.4rem;
+            border-radius: 50px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+        .sub-nav__back:hover { background: #1f4029; }
+
+        .sub-page {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem 5rem;
+        }
+        .sub-page__hero {
+            background: linear-gradient(135deg, #2d5a3d 0%, #4a8059 100%);
+            color: #fff;
+            border-radius: 16px;
+            padding: 2.5rem 2rem;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+        .sub-page__hero-icon { font-size: 3.5rem; margin-bottom: 0.75rem; display: block; }
+        .sub-page__hero h1 { font-size: 2.2rem; font-weight: 800; margin-bottom: 0.5rem; }
+        .sub-page__hero p { font-size: 1.1rem; opacity: 0.9; }
+
+        .sub-page__content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2d5a3d;
+            margin: 2.5rem 0 0.75rem;
+            padding-bottom: 0.4rem;
+            border-bottom: 2px solid #e5e7eb;
+        }
+        .sub-page__content p,
+        .sub-page__content li {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            color: #374151;
+            margin-bottom: 0.75rem;
+        }
+        .sub-page__content ul {
+            margin: 0.5rem 0 1rem 1.5rem;
+        }
+        .sub-page__content a {
+            color: #2d5a3d;
+            font-weight: 600;
+        }
+        .sub-page__content a:hover { text-decoration: underline; }
+
+        .sub-page__stand {
+            display: inline-block;
+            background: #f0fdf4;
+            color: #2d5a3d;
+            border: 1px solid #bbf7d0;
+            border-radius: 8px;
+            padding: 0.4rem 1rem;
+            font-size: 0.95rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .sub-page__back-bottom {
+            margin-top: 3.5rem;
+            padding-top: 2rem;
+            border-top: 2px solid #e5e7eb;
+            text-align: center;
+        }
+        .sub-page__back-bottom a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #2d5a3d;
+            color: #fff;
+            text-decoration: none;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-size: 1.15rem;
+            font-weight: 700;
+            transition: background 0.2s;
+        }
+        .sub-page__back-bottom a:hover { background: #1f4029; }
+
+        .sub-footer {
+            background: #1a2e23;
+            color: rgba(255,255,255,0.5);
+            text-align: center;
+            padding: 1.5rem;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="sub-nav" role="navigation" aria-label="Seitennavigation">
+    <div class="sub-nav__inner">
+        <a href="index.html" class="sub-nav__logo" aria-label="Zur CallSafe Startseite">
+            <span>🛡️</span>
+            <span>CallSafe</span>
+        </a>
+        <a href="index.html" class="sub-nav__back">
+            ← Zurück zur Startseite
+        </a>
+    </div>
+</nav>
+
+<!-- Inhalt -->
+<main class="sub-page" id="main-content">
+
+    <div class="sub-page__hero">
+        <span class="sub-page__hero-icon" aria-hidden="true">🔒</span>
+        <h1>Datenschutzerklärung</h1>
+        <p>Transparenz im Umgang mit Ihren Daten</p>
+    </div>
+
+    <div class="sub-page__content">
+        <span class="sub-page__stand">Stand: 13.05.2026</span>
+
+        <h2>A. Allgemeine Hinweise</h2>
+        <p>Der Schutz personenbezogener Daten ist uns wichtig. Diese Datenschutzerklärung informiert darüber, welche personenbezogenen Daten bei der Nutzung der Webanwendung CallSafe verarbeitet werden, zu welchen Zwecken dies erfolgt und welche Rechte Nutzerinnen und Nutzer haben.</p>
+        <p>CallSafe ist eine Webanwendung zur Unterstützung der Betrugsprävention. Die Verarbeitung personenbezogener Daten erfolgt unter Beachtung der Datenschutz-Grundverordnung (DSGVO) sowie der in Deutschland geltenden Datenschutzvorschriften.</p>
+
+        <h2>B. Verantwortliche Stelle</h2>
+        <p>Verantwortlich für die Datenverarbeitung ist: <strong>Projektteam CallSafe</strong><br>
+        Universität Hildesheim, Fachbereich 4 – Wirtschaftsinformatik<br>
+        E-Mail: <a href="mailto:CallSafe@test.de">CallSafe@test.de</a></p>
+
+        <h2>C. Welche Daten werden verarbeitet?</h2>
+        <p>Bei der Nutzung von CallSafe können folgende Daten verarbeitet werden:</p>
+        <ul>
+            <li>Eingegebene oder gemeldete Telefonnummern</li>
+            <li>Kategorie der Meldung (z. B. Enkeltrick, falsche Polizei, Bankbetrug)</li>
+            <li>Freiwillige Beschreibung des Vorfalls</li>
+            <li>Technische Daten wie Zeitpunkt einer Anfrage</li>
+            <li>Login-Daten für geschützte Verwaltungsbereiche</li>
+            <li>E-Mail-Adresse und Passwort bei Benutzerkonten</li>
+        </ul>
+        <p>Die Beschreibung eines Betrugsfalls ist freiwillig. Bitte tragen Sie dort keine sensiblen persönlichen Informationen ein.</p>
+
+        <h2>D. Zweck der Datenverarbeitung</h2>
+        <p>Die Daten werden verarbeitet, um:</p>
+        <ul>
+            <li>Verdächtige Telefonnummern zu erkennen und zu warnen</li>
+            <li>Gemeldete Telefonnummern in einer Datenbank zu verwalten</li>
+            <li>Statistiken über gemeldete Betrugsarten zu erstellen</li>
+            <li>Den Administrationsbereich zu schützen</li>
+            <li>Die Funktionalität und Sicherheit der Webanwendung sicherzustellen</li>
+        </ul>
+
+        <h2>E. Rechtsgrundlage</h2>
+        <p>Die Verarbeitung erfolgt auf Grundlage von Art. 6 Abs. 1 DSGVO, insbesondere:</p>
+        <ul>
+            <li><strong>Art. 6 Abs. 1 lit. f DSGVO</strong> – berechtigtes Interesse (Betrugsprävention)</li>
+            <li><strong>Art. 6 Abs. 1 lit. a DSGVO</strong> – Einwilligung (freiwillige Angaben)</li>
+            <li><strong>Art. 6 Abs. 1 lit. b DSGVO</strong> – Vertrag (bei Benutzerkonten)</li>
+        </ul>
+
+        <h2>F. Speicherung und Datenbank</h2>
+        <p>Die Daten werden in einer Datenbank gespeichert (Supabase). Passwörter werden nicht im Klartext gespeichert. Die Speicherung erfolgt nur so lange wie nötig (Art. 5 Abs. 1 lit. e DSGVO).</p>
+
+        <h2>G. Cookies und LocalStorage</h2>
+        <p>CallSafe verwendet keine Werbe-Cookies und kein Tracking (z. B. kein Google Analytics). Technisch notwendige Speicherungen (Login-Status, Sicherheitstoken) erfolgen über LocalStorage. Dafür ist nach § 25 TDDDG keine gesonderte Einwilligung erforderlich.</p>
+
+        <h2>H. Datensicherheit</h2>
+        <p>Zum Schutz der Daten werden eingesetzt: geschützte API-Endpunkte, sichere Passwort-Speicherung, Authentifizierung über Sicherheitstokens, Rate-Limiting und Zugriffsbeschränkungen (Art. 32 DSGVO).</p>
+
+        <h2>I. Ihre Rechte</h2>
+        <p>Sie haben nach der DSGVO das Recht auf: Auskunft (Art. 15), Berichtigung (Art. 16), Löschung (Art. 17), Einschränkung (Art. 18), Datenübertragbarkeit (Art. 20), Widerspruch (Art. 21) und Beschwerde bei einer Aufsichtsbehörde (Art. 77).</p>
+        <p>Anfragen richten Sie bitte an: <a href="mailto:CallSafe@test.de">CallSafe@test.de</a></p>
+
+        <h2>J. Hinweis zum Studienprojekt</h2>
+        <p>CallSafe wurde im Rahmen eines Studienprojekts an der Universität Hildesheim entwickelt. Diese Datenschutzerklärung ersetzt keine verbindliche rechtliche Beratung, sondern dient der transparenten Darstellung unseres Datenschutzkonzepts.</p>
+
+        <div class="sub-page__back-bottom">
+            <a href="index.html">🏠 Zurück zur Startseite</a>
+        </div>
+    </div>
+
+</main>
+
+<footer class="sub-footer">
+    <p>&copy; <script>document.write(new Date().getFullYear())</script> CallSafe – Universität Hildesheim. Alle Rechte vorbehalten.</p>
+</footer>
+
+</body>
+</html>
