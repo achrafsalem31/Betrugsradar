@@ -193,8 +193,8 @@ function displayQuizzesList(quizzes) {
                     </div>
                 </div>
                 <div style="display: flex; gap: 8px;">
-                    <button class="btn btn-secondary" onclick="editQuiz('${quiz.id}')" style="padding: 8px 16px;">✏️ Bearbeiten</button>
-                    <button class="btn btn-danger" onclick="deleteQuiz('${quiz.id}')" style="padding: 8px 16px; background: #d32f2f;">🗑️ Löschen</button>
+                    <button class="btn btn-secondary" onclick="editQuiz('${quiz.id}')" style="padding: 8px 16px;">Bearbeiten</button>
+                    <button class="btn btn-danger" onclick="deleteQuiz('${quiz.id}')" style="padding: 8px 16px; background: #d32f2f;">Löschen</button>
                 </div>
             </div>
         `;
@@ -495,8 +495,8 @@ function displayTrainingsList(modules) {
                     </div>
                 </div>
                 <div style="display: flex; gap: 8px;">
-                    <button class="btn btn-secondary" onclick="editTraining('${module.id}')" style="padding: 8px 16px;">✏️ Bearbeiten</button>
-                    <button class="btn btn-danger" onclick="deleteTraining('${module.id}')" style="padding: 8px 16px; background: #d32f2f;">🗑️ Löschen</button>
+                    <button class="btn btn-secondary" onclick="editTraining('${module.id}')" style="padding: 8px 16px;">Bearbeiten</button>
+                    <button class="btn btn-danger" onclick="deleteTraining('${module.id}')" style="padding: 8px 16px; background: #d32f2f;">Löschen</button>
                 </div>
             </div>
         `;
@@ -548,27 +548,11 @@ function enhancedInitializeAdminSystem() {
     setupNumbersManagement();
 }
 
-// ===================================
-// QUIZ BEARBEITEN — FIX
-// ===================================
-// ANLEITUNG:
-// Öffne admin-management-complete.js
-// Gehe zu Zeile 559:
-//   window.editQuiz = (id) => alert('Edit Quiz feature coming soon!');
-//
-// Ersetze NUR diese eine Zeile durch:
-//   window.editQuiz = editQuiz;
-//
-// Dann füge die folgende editQuiz()-Funktion
-// DIREKT über den window.exports-Block ein
-// (also direkt über Zeile 552: window.closeAddNumberModal = ...)
-// ===================================
-
+// QUIZ BEARBEITEN
 
 async function editQuiz(quizId) {
     showLoading();
 
-    // 1. Quiz mit allen Fragen vom Backend laden
     let quiz;
     try {
         const response = await fetch(`${API_URL}/quiz`, {
@@ -595,7 +579,7 @@ async function editQuiz(quizId) {
     const modalHTML = `
         <div id="add-quiz-modal" class="modal">
             <div class="modal-content" style="max-width: 600px; max-height: 90vh; overflow-y: auto;">
-                <h2>✏️ Quiz bearbeiten</h2>
+                <h2>Quiz bearbeiten</h2>
                 <form id="add-quiz-form">
                     <div class="form-group">
                         <label>Titel *</label>
@@ -629,7 +613,7 @@ async function editQuiz(quizId) {
                     <button type="button" class="btn btn-secondary" onclick="addQuestionField()" style="margin: 10px 0;">+ Frage hinzufügen</button>
 
                     <div style="display: flex; gap: 10px; margin-top: 20px;">
-                        <button type="submit" class="btn btn-primary" style="flex: 1;">💾 Änderungen speichern</button>
+                        <button type="submit" class="btn btn-primary" style="flex: 1;">Änderungen speichern</button>
                         <button type="button" class="btn btn-secondary" onclick="closeAddQuizModal()" style="flex: 1;">Abbrechen</button>
                     </div>
                 </form>
@@ -829,7 +813,7 @@ function showAddTrainingModal() {
                     font-size: 26px; cursor: pointer; color: #555;
                     line-height: 1;">&times;</span>
 
-                <h2 style="color: #2d5a3d; margin-bottom: 20px;">📚 Neues Training erstellen</h2>
+                <h2 style="color: #2d5a3d; margin-bottom: 20px;">Neues Training erstellen</h2>
 
                 <form id="add-training-form">
 

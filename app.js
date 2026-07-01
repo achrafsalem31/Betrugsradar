@@ -211,34 +211,87 @@ function hideLearnDetail() {
     document.querySelector('.page-header').scrollIntoView({ behavior: 'smooth' });
 }
 
+// Icon + Anzeigename pro Kategorie (zentral an einer Stelle)
+const QUIZ_CATEGORY_META = {
+    enkeltrick:   { icon: '👵', label: 'Enkeltrick' },
+    polizei:      { icon: '👮', label: 'Falsche Polizisten' },
+    schock:       { icon: '🚨', label: 'Schockanruf' },
+    bank:         { icon: '🏦', label: 'Bank-Betrug' },
+    techsupport:  { icon: '💻', label: 'Tech-Support' },
+    gewinnspiel:  { icon: '🎁', label: 'Gewinnspiel' },
+    allgemein:    { icon: '🎯', label: 'Gemischtes Quiz' }
+};
+ 
+async function loadQuizTopicButtons() {
+    const grid = document.getElementById('quiz-topics-grid');
+    if (!grid) return;
+ 
+    try {
+        const response = await fetch(`${window.API_URL}/quiz`, { cache: 'no-store' });
+        const data = await response.json();
+        const quizzes = (data.quizzes || []).filter(q => q.published);
+ 
+        if (quizzes.length === 0) {
+            grid.innerHTML = '<p style="text-align:center; color:#666;">Noch keine Quizze verfügbar</p>';
+            return;
+        }
+ 
+        grid.innerHTML = '';
+ 
+        quizzes.forEach(quiz => {
+            const meta = QUIZ_CATEGORY_META[quiz.category] || { icon: '❓', label: quiz.category };
+ 
+            const btn = document.createElement('button');
+            btn.className = 'quiz-topic-btn';
+            btn.dataset.quiz = quiz.category;
+            btn.innerHTML = `<span class="topic-icon">${meta.icon}</span><span>${meta.label}</span>`;
+            btn.addEventListener('click', () => startQuiz(quiz.category));
+ 
+            grid.appendChild(btn);
+        });
+ 
+    } catch (error) {
+        console.error('Fehler beim Laden der Quiz-Themen:', error);
+        grid.innerHTML = '<p style="text-align:center; color:#c00;">Fehler beim Laden der Quiz-Themen</p>';
+    }
+}
+
 function initializeQuizPage() {
-    const topicBtns = document.querySelectorAll('.quiz-topic-btn');
     const nextBtn = document.getElementById('quiz-next');
     const restartBtn = document.getElementById('quiz-restart');
     const reviewBtn = document.getElementById('quiz-review');
-    
-    topicBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            startQuiz(btn.dataset.quiz);
-        });
-    });
-    
+ 
     nextBtn.addEventListener('click', nextQuestion);
     restartBtn.addEventListener('click', resetQuiz);
     reviewBtn.addEventListener('click', () => {
         resetQuiz();
     });
+ 
+    // Quiz-Themen-Buttons dynamisch aus Supabase laden
+    loadQuizTopicButtons();
 }
 
-function startQuiz(topic) {
+async function startQuiz(topic) {
     appState.currentQuiz = topic;
     appState.currentQuestion = 0;
     appState.quizScore = 0;
     appState.quizAnswers = [];
-
-    if (window.allAdminQuizzes) {
-        const dbQuiz = window.allAdminQuizzes.find(q => q.category === topic);
-        if (dbQuiz && dbQuiz.questions) {
+ 
+    // Lade-Anzeige, falls vorhanden (kein harter Fehler wenn nicht da)
+    if (typeof showLoading === 'function') showLoading();
+ 
+    try {
+        // IMMER frisch von der API laden -- nicht mehr von
+        // window.allAdminQuizzes abhaengig, das nur im Admin-Bereich
+        // gesetzt wird.
+        const response = await fetch(`${window.API_URL}/quiz`, { cache: 'no-store' });
+        const data = await response.json();
+        const quizzes = data.quizzes || [];
+ 
+        // Nur veroeffentlichte Quizze fuer Kunden zulassen
+        const dbQuiz = quizzes.find(q => q.category === topic && q.published);
+ 
+        if (dbQuiz && dbQuiz.questions && dbQuiz.questions.length > 0) {
             quizQuestions[topic] = dbQuiz.questions.map(q => ({
                 question: q.question,
                 scenario: q.scenario || '',
@@ -247,12 +300,18 @@ function startQuiz(topic) {
                 explanation: q.explanation || ''
             }));
             console.log(`🧠 Quiz für ${topic} erfolgreich aus Supabase geladen!`);
+        } else {
+            console.warn(`⚠️ Kein veröffentlichtes Quiz für Kategorie "${topic}" gefunden`);
         }
+    } catch (error) {
+        console.error('Fehler beim Laden des Quiz:', error);
+    } finally {
+        if (typeof hideLoading === 'function') hideLoading();
     }
-    
+ 
     document.getElementById('quiz-start').style.display = 'none';
     document.getElementById('quiz-container').classList.remove('hidden');
-    
+ 
     loadQuestion();
 }
 
@@ -663,4 +722,4 @@ if (csFooterInstallLink) csFooterInstallLink.addEventListener('click', csTrigger
 
 
 
-
+navigator.serviceWorker.register('./service-worker.js')
