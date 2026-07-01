@@ -1,4 +1,4 @@
-console.log("🔥 ADMIN SYSTEM MODIFIED LOADED");
+console.log("ADMIN SYSTEM MODIFIED LOADED");
 document.addEventListener('DOMContentLoaded', () => {
     initializeAdminSystem();
 });
@@ -30,7 +30,7 @@ function initializeAdminSystem() {
 document.addEventListener('submit', async (e) => {
     if (e.target && e.target.id === 'login-form') {
         e.preventDefault();
-        console.log("🔥 LOGIN SUBMIT DETECTED");
+        console.log("LOGIN SUBMIT DETECTED");
         await handleAdminLogin();
     }
 });
