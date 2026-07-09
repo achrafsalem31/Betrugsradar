@@ -264,7 +264,7 @@ function initializeQuizPage() {
     nextBtn.addEventListener('click', nextQuestion);
     restartBtn.addEventListener('click', resetQuiz);
     reviewBtn.addEventListener('click', () => {
-        resetQuiz();
+        showReview();
     });
  
     // Quiz-Themen-Buttons dynamisch aus Supabase laden
@@ -420,6 +420,67 @@ function showResults() {
     
     appState.stats.totalQuizzes++;
     saveStats();
+}
+
+function showReview() {
+    const questions = quizQuestions[appState.currentQuiz];
+
+    document.getElementById('quiz-results').classList.add('hidden');
+
+    const container = document.getElementById('quiz-container');
+    container.classList.remove('hidden');
+
+    const optionsDiv = document.getElementById('quiz-options');
+    const feedbackDiv = document.getElementById('quiz-feedback');
+    const nextBtn = document.getElementById('quiz-next');
+    const scenarioDiv = document.getElementById('quiz-scenario');
+
+    // Fortschrittsbalken auf 100%
+    document.querySelector('.progress-fill').style.width = '100%';
+
+    // Alle Fragen nacheinander als Review anzeigen
+    container.innerHTML = `
+        <h2 style="color:#2d5a3d; margin-bottom:1.5rem;">📋 Ihre Antworten</h2>
+        <div id="review-list"></div>
+        <button class="btn btn-primary" style="margin-top:1.5rem; width:100%;"
+            id="review-restart-btn">Neues Quiz starten</button>
+    `;
+    document.getElementById('review-restart-btn').addEventListener('click', resetQuiz);
+
+    const reviewList = document.getElementById('review-list');
+
+    appState.quizAnswers.forEach((answer, index) => {
+        const q = questions[index];
+        const isCorrect = answer.isCorrect;
+
+        const block = document.createElement('div');
+        block.style.cssText = `
+            background: ${isCorrect ? '#d1fae5' : '#fee2e2'};
+            border: 2px solid ${isCorrect ? '#059669' : '#dc2626'};
+            border-radius: 12px;
+            padding: 1rem 1.25rem;
+            margin-bottom: 1rem;
+        `;
+
+        block.innerHTML = `
+            <p style="font-weight:700; margin-bottom:0.5rem;">
+                ${isCorrect ? '✅' : '❌'} Frage ${index + 1}: ${q.question}
+            </p>
+            <p style="margin-bottom:0.25rem;">
+                <strong>Ihre Antwort:</strong> ${q.options[answer.selected]}
+            </p>
+            ${!isCorrect ? `
+            <p style="margin-bottom:0.25rem; color:#059669;">
+                <strong>Richtige Antwort:</strong> ${q.options[answer.correct]}
+            </p>` : ''}
+            ${q.explanation ? `
+            <p style="margin-top:0.5rem; color:#374151; font-size:0.95rem;">
+                💡 ${q.explanation}
+            </p>` : ''}
+        `;
+
+        reviewList.appendChild(block);
+    });
 }
 
 function resetQuiz() {
@@ -723,3 +784,5 @@ if (csFooterInstallLink) csFooterInstallLink.addEventListener('click', csTrigger
 
 
 navigator.serviceWorker.register('./service-worker.js')
+
+window.resetQuiz = resetQuiz;
