@@ -537,7 +537,6 @@ async function deleteTraining(trainingId) {
     }
 }
 
-// ===================================
 // 4. INITIALIZATION
 
 
@@ -573,7 +572,7 @@ async function editQuiz(quizId) {
         return;
     }
 
-    // 2. Modal öffnen (HTML — identisch mit showAddQuizModal, aber Titel anders)
+    // 2. Modal öffnen 
     if (document.getElementById('add-quiz-modal')) return;
 
     const modalHTML = `
@@ -1052,4 +1051,4 @@ window.showAddTrainingModal  = showAddTrainingModal;
 window.closeAddTrainingModal = closeAddTrainingModal;
 window.editTraining          = editTraining;       
 
-console.log('✅ Komplettes Admin Management System geladen');
+console.log('Komplettes Admin Management System geladen');

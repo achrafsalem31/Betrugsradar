@@ -458,4 +458,4 @@ window.addEventListener('load', () => {
     }
 });
 
-console.log('🔥 SYSTEM FULLY REFINED & READY');
+console.log('SYSTEM FULLY REFINED & READY');
