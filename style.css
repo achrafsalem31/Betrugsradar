@@ -1817,3 +1817,342 @@ table tbody tr:hover {
         height: 64px;
     }
 }
+
+/* =====================================================
+   CALLSAFE — RESPONSIVE FIX
+   Ans ENDE von style.css einfügen (nach der letzten Zeile)
+   =====================================================
+   
+   GEFUNDENE PROBLEME:
+   1. Nur ein Media Query (@max-width: 768px) — kein Breakpoint
+      für große Bildschirme (1400px+), Laptops (1024px) oder
+      kleine Tablets (600px).
+   2. .score-circle hat feste Größe (200px × 200px) — bricht
+      auf kleinen Bildschirmen aus dem Container.
+   3. .nav-container hat max-width: 1200px aber kein Padding
+      für sehr große Bildschirme → wirkt "zu schmal" auf 2K/4K.
+   4. .main-content hat max-width: 1200px ohne Skalierung auf
+      großen Bildschirmen → links/rechts viel Leerraum.
+   5. .admin-tabs scrollen nicht horizontal auf mobil → Tabs
+      brechen um oder werden abgeschnitten.
+   6. .numbers-controls (Suche + Buttons) stapelt sich nicht
+      auf kleinen Bildschirmen.
+   7. .quiz-container und .quiz-start haben feste max-width:700px
+      die auf Tablets zu eng wirkt.
+   8. Buttons zu klein für Senioren auf Touch-Geräten (unter 44px
+      Touch-Target nach WCAG 2.1).
+   ===================================================== */
+
+
+/* =====================================================
+   1. GROSSE BILDSCHIRME (1400px und breiter)
+   Behebt: "zu schmal / viel Leerraum links und rechts"
+   ===================================================== */
+@media (min-width: 1400px) {
+    .nav-container,
+    .main-content {
+        max-width: 1400px;
+    }
+
+    :root {
+        --font-size-base: 1.2rem;
+        --font-size-lg:   1.5rem;
+        --font-size-xl:   1.875rem;
+    }
+}
+
+@media (min-width: 1920px) {
+    /* 2K / Full-HD Großmonitore */
+    .nav-container,
+    .main-content {
+        max-width: 1600px;
+    }
+}
+
+
+/* =====================================================
+   2. LAPTOPS UND MITTELGROSSE DESKTOPS (1024px – 1399px)
+   Behebt: Layout etwas enger als nötig
+   ===================================================== */
+@media (max-width: 1399px) and (min-width: 1025px) {
+    .nav-container,
+    .main-content {
+        max-width: 1100px;
+    }
+}
+
+
+/* =====================================================
+   3. TABLETS QUER (768px – 1024px)
+   ===================================================== */
+@media (max-width: 1024px) and (min-width: 769px) {
+    .nav-container,
+    .main-content {
+        padding-left: var(--space-xl);
+        padding-right: var(--space-xl);
+    }
+
+    .report-container {
+        grid-template-columns: 1fr;
+        max-width: 640px;
+        margin: 0 auto;
+    }
+
+    .quiz-container,
+    .quiz-start,
+    .quiz-results {
+        max-width: 100%;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
+/* =====================================================
+   4. MOBILE UND TABLETS HOCH (bis 768px) — ERWEITERT
+   Ergänzt den bestehenden @media (max-width: 768px) Block
+   ===================================================== */
+@media (max-width: 768px) {
+
+    /* Navigation: Logo + Nav übereinander */
+    .nav-container {
+        padding: var(--space-md);
+        gap: var(--space-md);
+    }
+
+    .nav-logo {
+        justify-content: center;
+    }
+
+    .logo-slogan {
+        display: none; /* Slogan auf Mobil ausblenden um Platz zu sparen */
+    }
+
+    /* Admin-Tabs horizontal scrollbar statt Umbruch */
+    .admin-tabs {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        flex-wrap: nowrap;
+        padding-bottom: 2px;
+        scrollbar-width: none; /* Firefox */
+    }
+    .admin-tabs::-webkit-scrollbar {
+        display: none; /* Chrome/Safari */
+    }
+    .admin-tab {
+        white-space: nowrap;
+        flex-shrink: 0;
+        padding: var(--space-md) var(--space-lg);
+    }
+
+    /* Nummern-Suche und Buttons untereinander */
+    .numbers-controls {
+        flex-direction: column;
+    }
+    .numbers-controls .btn {
+        width: 100%;
+    }
+
+    /* Score-Kreis kleiner für Mobil */
+    .score-circle {
+        width: 150px;
+        height: 150px;
+        font-size: var(--font-size-2xl);
+    }
+
+    /* Quiz-Container volle Breite */
+    .quiz-container {
+        max-width: 100%;
+        padding: var(--space-lg);
+    }
+
+    .quiz-start {
+        max-width: 100%;
+    }
+
+    /* Page-Header auf Mobil kompakter */
+    .page-header {
+        margin-bottom: var(--space-xl);
+    }
+    .page-header h1 {
+        font-size: var(--font-size-2xl);
+    }
+
+    /* Lernkarten: 1 Spalte */
+    .learn-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Ergebnis-Karte: weniger Innenabstand */
+    .result-details {
+        padding: var(--space-lg);
+    }
+    .result-status {
+        padding: var(--space-lg);
+        font-size: var(--font-size-xl);
+    }
+
+    /* Stats-Grid: 2 Spalten statt 4 */
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-md);
+    }
+
+    /* Modal auf Mobil: volle Breite */
+    .modal-content {
+        width: 95%;
+        padding: var(--space-xl);
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+}
+
+
+/* =====================================================
+   5. KLEINE SMARTPHONES (bis 480px)
+   ===================================================== */
+@media (max-width: 480px) {
+
+    :root {
+        --font-size-base: 1rem;
+        --font-size-lg:   1.125rem;
+        --font-size-xl:   1.375rem;
+        --font-size-2xl:  1.75rem;
+        --font-size-3xl:  2.25rem;
+    }
+
+    /* Nav-Buttons gleichmäßig verteilen */
+    .nav-links {
+        gap: 2px;
+    }
+    .nav-btn {
+        min-width: 56px;
+        padding: var(--space-sm) var(--space-xs);
+        font-size: 0.8rem;
+    }
+    .nav-icon {
+        font-size: 1.4rem;
+    }
+
+    /* Stats: 1 Spalte auf kleinen Screens */
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Score-Kreis noch kleiner */
+    .score-circle {
+        width: 120px;
+        height: 120px;
+        font-size: var(--font-size-xl);
+    }
+
+    /* Input-Gruppe weniger Padding */
+    .input-group {
+        padding: var(--space-lg);
+    }
+
+    /* Report-Container */
+    .report-form,
+    .info-card {
+        padding: var(--space-lg);
+    }
+
+    /* Quiz-Optionen: besser tippbar für Senioren */
+    .quiz-option {
+        padding: var(--space-lg) var(--space-md);
+        font-size: var(--font-size-base);
+        min-height: 52px;
+    }
+
+    /* Footer-Spalten untereinander */
+    .cs-footer__columns {
+        grid-template-columns: 1fr;
+        gap: var(--space-xl);
+    }
+}
+
+
+/* =====================================================
+   6. SENIOREN-FREUNDLICHKEIT (Touch-Targets)
+   Alle anklickbaren Elemente mindestens 44×44px
+   (WCAG 2.1 Erfolgsmaßstab 2.5.5)
+   ===================================================== */
+@media (pointer: coarse) {
+    /* Touch-Gerät erkannt (Smartphone/Tablet) */
+
+    .nav-btn {
+        min-height: 52px;
+        min-width: 64px;
+    }
+
+    .btn {
+        min-height: 52px;
+        padding: var(--space-lg) var(--space-xl);
+    }
+
+    .quiz-option {
+        min-height: 56px;
+        padding: var(--space-lg);
+    }
+
+    .quiz-topic-btn {
+        min-height: 80px;
+    }
+
+    .learn-card {
+        padding: var(--space-xl);
+    }
+
+    /* Formulare: größere Felder für Senioren */
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        min-height: 52px;
+        font-size: 1.05rem;
+    }
+
+    .input-group input {
+        min-height: 60px;
+        font-size: var(--font-size-xl);
+    }
+}
+
+
+/* =====================================================
+   7. PWA STANDALONE-MODUS
+   Wenn die App als PWA installiert und geöffnet wird,
+   braucht sie keinen Browser-Chrome-Platz und hat evtl.
+   Safe-Area-Insets (iPhone Notch/Home-Bar)
+   ===================================================== */
+@media (display-mode: standalone) {
+    body {
+        /* Safe Area für iPhones mit Notch/Home-Bar */
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+        padding-left: env(safe-area-inset-left, 0px);
+        padding-right: env(safe-area-inset-right, 0px);
+    }
+
+    .main-nav {
+        padding-top: env(safe-area-inset-top, 0px);
+    }
+
+    .install-prompt {
+        /* PWA-Banner in der installierten App verstecken */
+        display: none !important;
+    }
+}
+
+
+/* =====================================================
+   8. HOCHAUFLÖSENDE BILDSCHIRME (Retina / HiDPI)
+   Bilder und Icons scharf darstellen
+   ===================================================== */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .logo-img,
+    .cs-footer__logo-img {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+    }
+}
