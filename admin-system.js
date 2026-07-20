@@ -115,7 +115,7 @@ async function handleAdminLogin() {
             const logoutBtn = document.getElementById('logoutBtn');
             if (logoutBtn) {
                 logoutBtn.style.setProperty('display', 'flex', 'important');
-                console.log("🔥 Logout button forced to show");
+                console.log("Logout button forced to show");
             }
         }, 100);
 

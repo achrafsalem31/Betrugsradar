@@ -31,22 +31,30 @@ Eine Progressive Web App (PWA) zum Schutz vor Telefonbetrug, speziell entwickelt
 - Interaktive Lernkontrolle
 
 ### 4. **Meldefunktion**
-- Community-Schutz durch Meldungen
-- Einfacher Prozess mit Kategorisierung
-- Verlinkung zu offiziellen Meldestellen (Bundesnetzagentur)
-- Automatische Blacklist-Aktualisierung
+• Verdächtige Telefonnummern können gemeldet werden 
+• Einfacher Meldeprozess mit Kategorisierung 
+• Beschreibung des Betrugsfalls möglich 
+• Meldungen werden im Backend gespeichert 
+• Gemeldete Nummern können im Admin-Bereich geprüft und verwaltet werden 
+• Verlinkung zu offiziellen Meldestellen, beispielsweise zur Bundesnetzagentur
 
 ### 5. **Admin-Bereich**
-- Statistiken (Prüfungen, Meldungen, Quiz)
-- Datenbankverwaltung (Whitelist/Blacklist)
-- Analytik der Meldungen
-- A/B-Test Vorbereitung für Warntexte
+• Anzeige von Statistiken zu Prüfungen, Meldungen und Quiz 
+• Verwaltung von Whitelist und Blacklist 
+• Prüfung und Bearbeitung eingegangener Meldungen 
+• Verwaltung von Quizfragen 
+• Verwaltung von Kontaktanfragen 
+• Analyse der gespeicherten Meldungen 
+• Vorbereitung unterschiedlicher Warntexte 
 
 ### 6. **PWA Features**
-- Installierbar ohne App Store
-- Offline-Nutzung möglich
-- Schnelle Updates
-- Barrierefreie Bedienung
+• Installierbar ohne App Store 
+• Installation direkt über den Browser 
+• Service Worker zum Zwischenspeichern wichtiger Dateien 
+• Schnelle Aktualisierung 
+• Responsive und barrierearme Bedienung 
+• Grundlegende Nutzung bereits geladener Inhalte ohne Internetverbindung 
+Funktionen wie Nummernprüfung, Anmeldung, Meldungen und dynamische Quizdaten benötigen eine Verbindung zum Backend.
 
 ## Installation & Nutzung
 
@@ -81,35 +89,45 @@ Eine Progressive Web App (PWA) zum Schutz vor Telefonbetrug, speziell entwickelt
 
 
 ### Datenbank (Simulation)
--Supabase 
-// reports - Meldungen
-
-// numbers - Betrugsnummern
+Die Anwendung verwendet ein Backend mit Supabase zur Speicherung und Verwaltung der Daten.
+ Verwendete Datenbereiche: 
+ • reports – eingegangene Meldungen 
+ • numbers – bekannte, verdächtige und sichere Telefonnummern 
+ • Quizdaten 
+ • Benutzerdaten 
+ • Kontaktanfragen 
 
 
 
 
 ## Datenschutz
 
-- Alle Daten werden lokal gespeichert (LocalStorage)
-- Keine Server-Kommunikation
-- Keine Cookies
-- Keine Tracking-Tools
-- Vollständig offline nutzbar
+Im Browser können einzelne Daten lokal gespeichert werden, beispielsweise: 
+• Authentifizierungs-Token 
+• grundlegende Benutzerdaten 
+• lokale Anwendungsdaten 
+Für bestimmte Funktionen findet eine Kommunikation mit dem Backend statt, beispielsweise bei: 
+• Nummernprüfung 
+• Anmeldung 
+• Meldefunktion 
+• Quiz 
+• Kontaktformular 
+• Admin-Funktionen 
+Die Anwendung verwendet keine Tracking-Tools und keine Werbe-Cookies.
 
 ## Zukünftige Erweiterungen
 
-- [ ] Backend-Integration für echte Datenbank
-- [ ] Push-Benachrichtigungen bei neuen Betrugswellen
-- [ ] Spracherkennung für Anruferkennung
-- [ ] Community-Features
-- [ ] Mehrsprachigkeit
-- [ ] Export von Statistiken
-- [ ] Integration mit Bundesnetzagentur-API
+• Push-Benachrichtigungen bei neuen Betrugswellen 
+• Spracherkennung und Sprachausgabe 
+• Community-Funktionen 
+• Mehrsprachigkeit 
+• Export von Statistiken 
+• Integration offizieller Schnittstellen 
+• Erweiterte Offline-Funktionalität 
+• Verbesserte Barrierefreiheit 
 
 ## Entwickler
-Diese App wurde als Studienprojekt entwickelt.
-
+Diese Anwendung wurde als Studienprojekt entwickelt.
 Master IT-Studienprojekt von:
 - Achraf Salem
 - Saad Ahmito
