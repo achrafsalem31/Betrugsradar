@@ -146,7 +146,7 @@ async function initializeLearnPage() {
         </div>`;
 
     try {
-        const response = await fetch('http://localhost:3000/api/training');
+        const response = await fetch('https://callsafe-backend-nzg8.onrender.com/api/training');
         const data = await response.json();
         const modules = data.modules || [];
 

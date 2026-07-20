@@ -141,7 +141,7 @@ function showLoginError(message) {
 
 
 async function loadAdminDashboard() {
-    console.log('📊 Loading Admin Dashboard...');
+    console.log('Loading Admin Dashboard...');
     
     // Check if still logged in
     if (!window.API.isLoggedIn() || !window.API.isAdmin()) {
