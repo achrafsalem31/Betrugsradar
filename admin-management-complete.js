@@ -769,7 +769,6 @@ function escapeHtml(str) {
 }
 
 // ===================================
-// window-Export — Zeile 559 ERSETZEN durch:
 //   window.editQuiz = editQuiz;
 // ===================================
 
@@ -787,7 +786,7 @@ window.deleteTraining = deleteTraining;
 
 
 
-// showAddTrainingModal — Neues Modul
+// showAddTrainingModal 
 
 function showAddTrainingModal() {
   

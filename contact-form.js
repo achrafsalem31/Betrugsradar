@@ -115,7 +115,7 @@
         submitBtn.classList.add('loading');
 
         try {
-            const apiBase = (window.API_URL || 'http://localhost:3000/api');
+            const apiBase = (window.API_URL || "https://callsafe-backend-nzg8.onrender.com/api");
             const response = await fetch(`${apiBase}/contact`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },

@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:3000/api';
+const API_URL = "https://callsafe-backend-nzg8.onrender.com/api";
 window.API_URL = API_URL;
 
 function getAuthHeaders() {
