@@ -1819,34 +1819,7 @@ table tbody tr:hover {
 }
 
 /* =====================================================
-   CALLSAFE — RESPONSIVE FIX
-   Ans ENDE von style.css einfügen (nach der letzten Zeile)
-   =====================================================
-   
-   GEFUNDENE PROBLEME:
-   1. Nur ein Media Query (@max-width: 768px) — kein Breakpoint
-      für große Bildschirme (1400px+), Laptops (1024px) oder
-      kleine Tablets (600px).
-   2. .score-circle hat feste Größe (200px × 200px) — bricht
-      auf kleinen Bildschirmen aus dem Container.
-   3. .nav-container hat max-width: 1200px aber kein Padding
-      für sehr große Bildschirme → wirkt "zu schmal" auf 2K/4K.
-   4. .main-content hat max-width: 1200px ohne Skalierung auf
-      großen Bildschirmen → links/rechts viel Leerraum.
-   5. .admin-tabs scrollen nicht horizontal auf mobil → Tabs
-      brechen um oder werden abgeschnitten.
-   6. .numbers-controls (Suche + Buttons) stapelt sich nicht
-      auf kleinen Bildschirmen.
-   7. .quiz-container und .quiz-start haben feste max-width:700px
-      die auf Tablets zu eng wirkt.
-   8. Buttons zu klein für Senioren auf Touch-Geräten (unter 44px
-      Touch-Target nach WCAG 2.1).
-   ===================================================== */
-
-
-/* =====================================================
    1. GROSSE BILDSCHIRME (1400px und breiter)
-   Behebt: "zu schmal / viel Leerraum links und rechts"
    ===================================================== */
 @media (min-width: 1400px) {
     .nav-container,
@@ -1872,7 +1845,6 @@ table tbody tr:hover {
 
 /* =====================================================
    2. LAPTOPS UND MITTELGROSSE DESKTOPS (1024px – 1399px)
-   Behebt: Layout etwas enger als nötig
    ===================================================== */
 @media (max-width: 1399px) and (min-width: 1025px) {
     .nav-container,
@@ -1912,7 +1884,6 @@ table tbody tr:hover {
 
 /* =====================================================
    4. MOBILE UND TABLETS HOCH (bis 768px) — ERWEITERT
-   Ergänzt den bestehenden @media (max-width: 768px) Block
    ===================================================== */
 @media (max-width: 768px) {
 
@@ -1927,7 +1898,7 @@ table tbody tr:hover {
     }
 
     .logo-slogan {
-        display: none; /* Slogan auf Mobil ausblenden um Platz zu sparen */
+        display: none; 
     }
 
     /* Admin-Tabs horizontal scrollbar statt Umbruch */
@@ -2076,8 +2047,6 @@ table tbody tr:hover {
 
 /* =====================================================
    6. SENIOREN-FREUNDLICHKEIT (Touch-Targets)
-   Alle anklickbaren Elemente mindestens 44×44px
-   (WCAG 2.1 Erfolgsmaßstab 2.5.5)
    ===================================================== */
 @media (pointer: coarse) {
     /* Touch-Gerät erkannt (Smartphone/Tablet) */
@@ -2105,7 +2074,7 @@ table tbody tr:hover {
         padding: var(--space-xl);
     }
 
-    /* Formulare: größere Felder für Senioren */
+    /* Formulare*/
     .form-group input,
     .form-group select,
     .form-group textarea {
@@ -2119,13 +2088,6 @@ table tbody tr:hover {
     }
 }
 
-
-/* =====================================================
-   7. PWA STANDALONE-MODUS
-   Wenn die App als PWA installiert und geöffnet wird,
-   braucht sie keinen Browser-Chrome-Platz und hat evtl.
-   Safe-Area-Insets (iPhone Notch/Home-Bar)
-   ===================================================== */
 @media (display-mode: standalone) {
     body {
         /* Safe Area für iPhones mit Notch/Home-Bar */
@@ -2146,8 +2108,7 @@ table tbody tr:hover {
 
 
 /* =====================================================
-   8. HOCHAUFLÖSENDE BILDSCHIRME (Retina / HiDPI)
-   Bilder und Icons scharf darstellen
+   8. HOCHAUFLÖSENDE BILDSCHIRME 
    ===================================================== */
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
     .logo-img,
