@@ -484,6 +484,29 @@ function showReview() {
 }
 
 function resetQuiz() {
+    // quiz-container auf Originalzustand zurücksetzen
+    const container = document.getElementById('quiz-container');
+    container.innerHTML = `
+        <div class="quiz-progress">
+            <div class="progress-bar"><div class="progress-fill"></div></div>
+            <p class="progress-text">Frage <span id="current-q">1</span> von <span id="total-q">5</span></p>
+        </div>
+        <div class="quiz-question">
+            <h2 id="question-text"></h2>
+            <div id="quiz-scenario" class="quiz-scenario hidden"></div>
+            <div id="quiz-options" class="quiz-options"></div>
+        </div>
+        <div id="quiz-feedback" class="quiz-feedback hidden"></div>
+        <div class="quiz-navigation">
+            <button id="quiz-next" class="btn btn-primary hidden">Weiter →</button>
+        </div>
+    `;
+
+    // Listener neu setzen (da innerHTML alles überschrieben hat)
+    document.getElementById('quiz-next').addEventListener('click', nextQuestion);
+
+    // Sichtbarkeit zurücksetzen
+    container.classList.add('hidden');
     document.getElementById('quiz-results').classList.add('hidden');
     document.getElementById('quiz-start').style.display = 'block';
     appState.currentQuiz = null;
