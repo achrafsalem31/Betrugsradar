@@ -537,7 +537,7 @@ async function deleteTraining(trainingId) {
     }
 }
 
-// 4. INITIALIZATION
+
 
 
 function enhancedInitializeAdminSystem() {
@@ -572,7 +572,7 @@ async function editQuiz(quizId) {
         return;
     }
 
-    // 2. Modal öffnen 
+
     if (document.getElementById('add-quiz-modal')) return;
 
     const modalHTML = `
@@ -628,20 +628,19 @@ async function editQuiz(quizId) {
     document.getElementById('quiz-category').value    = quiz.category    || '';
     document.getElementById('quiz-published').checked = quiz.published   || false;
 
-    // 4. Bestehende Fragen ins Modal laden
-    questionCounter = 0; // Counter zurücksetzen
+
+    questionCounter = 0; 
 
     const questions = quiz.questions || [];
 
     if (questions.length === 0) {
-        // Mindestens ein leeres Fragefeld anzeigen
+
         addQuestionField();
     } else {
         questions.forEach((q, index) => {
             questionCounter++;
             const container = document.getElementById('questions-container');
 
-            // Optionen aus JSONB-Array (Supabase gibt Array zurück)
             const opts = Array.isArray(q.options) ? q.options : ['', '', '', ''];
 
             const questionHTML = `
@@ -691,23 +690,21 @@ async function editQuiz(quizId) {
         });
     }
 
-    // 5. Submit → PUT statt POST
+
     document.getElementById('add-quiz-form').addEventListener('submit', async (e) => {
         e.preventDefault();
         await handleUpdateQuiz(quizId);
     });
 }
 
-// ===================================
-// handleUpdateQuiz — PUT /api/quiz/:id
-// ===================================
+
 async function handleUpdateQuiz(quizId) {
     const title       = document.getElementById('quiz-title').value.trim();
     const description = document.getElementById('quiz-description').value.trim();
     const category    = document.getElementById('quiz-category').value;
     const published   = document.getElementById('quiz-published').checked;
 
-    // Fragen einsammeln (identisch mit handleCreateQuiz)
+
     const questions = [];
     document.querySelectorAll('.question-block').forEach(block => {
         questions.push({
@@ -756,9 +753,7 @@ async function handleUpdateQuiz(quizId) {
     }
 }
 
-// ===================================
-// Hilfsfunktion — XSS-Schutz
-// ===================================
+
 function escapeHtml(str) {
     return String(str)
         .replace(/&/g, '&amp;')
@@ -768,9 +763,8 @@ function escapeHtml(str) {
         .replace(/'/g, '&#039;');
 }
 
-// ===================================
-//   window.editQuiz = editQuiz;
-// ===================================
+
+//   window.editQuiz 
 
 window.closeAddNumberModal = closeAddNumberModal;
 window.deleteNumber = deleteNumber;
@@ -904,7 +898,7 @@ function showAddTrainingModal() {
 }
 
 
-// handleAddTraining — Speichern
+// handleAddTraining 
 
 async function handleAddTraining() {
     const title       = document.getElementById('training-title').value.trim();
@@ -948,17 +942,15 @@ async function handleAddTraining() {
     }
 }
 
-// ===================================
-// closeAddTrainingModal
-// ===================================
+
+
 function closeAddTrainingModal() {
     const modal = document.getElementById('add-training-modal');
     if (modal) modal.remove();
 }
 
-// ===================================
-// editTraining — Modul bearbeiten
-// ===================================
+// editTraining Modul bearbeiten
+
 async function editTraining(trainingId) {
     showLoading();
 
