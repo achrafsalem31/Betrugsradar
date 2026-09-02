@@ -1,4 +1,3 @@
-// CALLSAFE — Contact Form 
 
 (function () {
     'use strict';
@@ -144,7 +143,7 @@
 
     overlay.addEventListener('transitionend', function () {
         if (!overlay.classList.contains('open')) {
-            // Reset after close animation
+            // Reset 
             setTimeout(function () {
                 form.style.display = '';
                 successBox.classList.remove('show');
