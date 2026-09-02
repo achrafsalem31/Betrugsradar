@@ -6,7 +6,7 @@ function setupNumbersManagement() {
     }
 }
 
-// Show Add Number Modal
+//  Add Number Modal
  
 function showAddNumberModal() {
     const modalHTML = `
