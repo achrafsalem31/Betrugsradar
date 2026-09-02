@@ -178,13 +178,7 @@ async function initializeLearnPage() {
     }
 }
 
-/**
- * Lerninhalt-Detailansicht anzeigen.
- * Ersetzt: showLearnDetail(topic)
- *
- * @param {string|null} topic  - alter Schlüssel (wird ignoriert wenn mod übergeben)
- * @param {object|null} mod    - Modul-Objekt aus der DB
- */
+
 function showLearnDetail(topic, mod) {
     let content = mod;
     if (!content && topic) {
@@ -211,7 +205,7 @@ function hideLearnDetail() {
     document.querySelector('.page-header').scrollIntoView({ behavior: 'smooth' });
 }
 
-// Icon + Anzeigename pro Kategorie (zentral an einer Stelle)
+
 const QUIZ_CATEGORY_META = {
     enkeltrick:   { icon: '👵', label: 'Enkeltrick' },
     polizei:      { icon: '👮', label: 'Falsche Polizisten' },
@@ -277,18 +271,16 @@ async function startQuiz(topic) {
     appState.quizScore = 0;
     appState.quizAnswers = [];
  
-    // Lade-Anzeige, falls vorhanden (kein harter Fehler wenn nicht da)
+
     if (typeof showLoading === 'function') showLoading();
  
     try {
-        // IMMER frisch von der API laden -- nicht mehr von
-        // window.allAdminQuizzes abhaengig, das nur im Admin-Bereich
-        // gesetzt wird.
+     
         const response = await fetch(`${window.API_URL}/quiz`, { cache: 'no-store' });
         const data = await response.json();
         const quizzes = data.quizzes || [];
  
-        // Nur veroeffentlichte Quizze fuer Kunden zulassen
+
         const dbQuiz = quizzes.find(q => q.category === topic && q.published);
  
         if (dbQuiz && dbQuiz.questions && dbQuiz.questions.length > 0) {
@@ -435,7 +427,7 @@ function showReview() {
     const nextBtn = document.getElementById('quiz-next');
     const scenarioDiv = document.getElementById('quiz-scenario');
 
-    // Fortschrittsbalken auf 100%
+
     document.querySelector('.progress-fill').style.width = '100%';
 
     // Alle Fragen nacheinander als Review anzeigen
@@ -502,10 +494,10 @@ function resetQuiz() {
         </div>
     `;
 
-    // Listener neu setzen (da innerHTML alles überschrieben hat)
+
     document.getElementById('quiz-next').addEventListener('click', nextQuestion);
 
-    // Sichtbarkeit zurücksetzen
+
     container.classList.add('hidden');
     document.getElementById('quiz-results').classList.add('hidden');
     document.getElementById('quiz-start').style.display = 'block';
@@ -782,7 +774,6 @@ function getCategoryName(category) {
     return names[category] || 'Unbekannt';
 }
 
-/* --- CallSafe Footer --- */
 
 const csYearEl = document.getElementById('cs-footer-year');
 if (csYearEl) csYearEl.textContent = new Date().getFullYear();
