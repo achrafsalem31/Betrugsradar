@@ -1,6 +1,5 @@
-// Setup Numbers Management
 function setupNumbersManagement() {
-    // Add Number Button
+
     const addBtn = document.getElementById('add-number-btn');
     if (addBtn) {
         addBtn.addEventListener('click', () => showAddNumberModal());
@@ -77,7 +76,7 @@ async function handleAddNumber() {
     showLoading();
     
     try {
-        // Use report endpoint to add number
+
         const success = await window.API.reportNumber(phone, category, '(Manuell hinzugefügt)');
         
         if (success) {
@@ -95,9 +94,7 @@ async function handleAddNumber() {
     }
 }
 
-/**
- * Close Add Number Modal
- */
+
 function closeAddNumberModal() {
     const modal = document.getElementById('add-number-modal');
     if (modal) {
@@ -315,9 +312,7 @@ function addQuestionField() {
     container.insertAdjacentHTML('beforeend', questionHTML);
 }
 
-/**
- * Remove Question
- */
+
 function removeQuestion(id) {
     const question = document.getElementById(`question-${id}`);
     if (question) {
@@ -334,7 +329,7 @@ async function handleCreateQuiz() {
     const category = document.getElementById('quiz-category').value;
     const published = document.getElementById('quiz-published').checked;
     
-    // Collect questions
+
     const questions = [];
     const questionBlocks = document.querySelectorAll('.question-block');
     
@@ -393,9 +388,7 @@ async function handleCreateQuiz() {
     }
 }
 
-/**
- * Close Add Quiz Modal
- */
+
 function closeAddQuizModal() {
     const modal = document.getElementById('add-quiz-modal');
     if (modal) {
